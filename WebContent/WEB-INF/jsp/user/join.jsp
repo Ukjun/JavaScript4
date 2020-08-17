@@ -7,28 +7,26 @@
 <title>Insert title here</title>
 </head>
 <style>
-body{
-	
-}
-.container{
-	width: 600px;
-	text-align: left;
-}
-h1{
-	
-	text-align: center;
-}
+	* { margin: 0px; padding: 0px;}
+	#container { width: 100%; height: 100vh; margin: 0 auto; text-align: center; background: #333333} 
+	#container h1{padding: 70px; color: #dedede}
+	#container form {text-align: center; margin-top: 100px;}
+	#container form input { width: 500px; height: 50px; margin-bottom: 20px; border-radius : 10px;}
+	#button { background : #8e8e8e}
+	#button:hover{ background : #cecece; color : 2e2e2e; font-weight: bold;}
 </style>
 <body>
-	<h1>회원 가입</h1>
-	<div class="container">
+	
+	<div id="container">
+		<h1>회원 가입</h1>
+		<hr>
 		<form id="frm" action="/JoinSer" method="post" onsubmit="return chk()">
 			<div><input type="text" name="user_id" placeholder="아이디" required></div>
 			<div><input type="text" name="user_pw" placeholder="비밀번호" required></div>
 			<div><input type="text" name="user_pwre" placeholder="비밀번호 확인" required></div>
 			<div><input type ="text" name ="nm" placeholder="이름" required></div>
 			<div><input type ="email" name ="email" placeholder="이메일" required></div>
-			<div><input type="submit" value="회원가입"></div>
+			<div><input type="submit" id="button" value="회원가입"></div>
 		</form>
 	</div>
 	<script>
@@ -57,7 +55,7 @@ h1{
 				//console.log('result : ' + result)
 			}
 			if(frm.email.value.length>0){
-				const email_t = (/^[0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/);
+				const email_t = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
 				if(!email_t.test(frm.email.value)){
 					alert('Please check your email !!') 
 					frm.email.focus()	
@@ -65,7 +63,6 @@ h1{
 				}
 				console.log('email result: ' + email_t.test(frm.email.value))
 			}
-			return false
 		}
 	</script>
 </body>

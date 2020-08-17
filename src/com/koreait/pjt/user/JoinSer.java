@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.koreait.pjt.ViewResolver;
+import com.koreait.pjt.db.UserDAO;
+import com.koreait.pjt.vo.UserVO;
 
 /**
  * Servlet implementation class JoinSer
@@ -33,6 +35,17 @@ public class JoinSer extends HttpServlet {
 		String user_pw = request.getParameter("user_pw");
 		String nm = request.getParameter("nm");
 		String email = request.getParameter("email");
+		
+		UserVO user = new UserVO();
+		user.setUser_id(user_id);
+		user.setUser_pw(user_pw);
+		user.setNm(nm);
+		user.setEmail(email);
+		int result = UserDAO.insUser(user);
+		
+		if(result!=1) {
+			response.sendRedirect("JoinSer");
+		}
 	}
 
 }
