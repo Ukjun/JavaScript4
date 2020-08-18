@@ -8,6 +8,7 @@ public class UserVO {
 	private String email;
 	private String profile_img;
 	private String r_dt;
+	private String m_dt;
 	public int getI_user() {
 		return i_user;
 	}
@@ -56,5 +57,5 @@ public class UserVO {
 	public void setM_dt(String m_dt) {
 		this.m_dt = m_dt;
 	}
-	private String m_dt;
+	
 }

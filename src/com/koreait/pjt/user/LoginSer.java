@@ -33,28 +33,34 @@ public class LoginSer extends HttpServlet {
 		UserVO user = new UserVO();
 		user.setUser_id(user_id);
 		user.setUser_pw(encrypt_pw);
-		
+		String msg = null;
 		
 		int result = UserDAO.login(user);
 		
 		
 		if(result!=1) {
-			request.setAttribute("data", user);
-			doGet(request,response);
-			if(result ==2) {
-				request.setAttribute("msg", "Password Error!!!!");
+			switch(result) {
+			case 2:
+				msg = "Password Error!!!!";
 				System.out.println("Password Error!!!!");
-			}else if(result==3) {
-				request.setAttribute("msg", "Id Error!!!!");
+				break;
+			case 3:
+				msg = "Id Error!!!!";
 				System.out.println("Id Error!!!!");
+				break;
 			}
-			return;
+			request.setAttribute("data", user);
+			request.setAttribute("msg", msg);
+			doGet(request,response);
+
 		}else if(result==1) {
-			response.sendRedirect("LoginSer");
+			response.sendRedirect("BoardListSer");
 			HttpSession hs = request.getSession();
+			System.out.println();
 			hs.setAttribute(Const.LOGIN_USER, user);
 			System.out.println("로그인 성공");
 			System.out.println("result : " + result);
+			return;
 		}
 		
 //		if(result !=1) {

@@ -1,7 +1,10 @@
 package com.koreait.pjt.db;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
+import com.koreait.pjt.vo.BoardVO;
 import com.koreait.pjt.vo.UserVO;
 
 public class UserDAO {
@@ -54,9 +57,42 @@ public class UserDAO {
 			}
 			
 		});
-		
-		
-		
+	}
+	public static List<BoardVO> selBoardList(){
+		List<BoardVO> list = new ArrayList<BoardVO>();
+		String sql = "select i_board, title, ctnt, hits, i_user from t_board4 order by i_board";
+		JdbcTemplate.executeQuery(sql, new JdbcSelectInterface() {
+
+			@Override
+			public ResultSet prepared(PreparedStatement ps) throws SQLException {
+				// TODO Auto-generated method stub
+				return ps.executeQuery();
+			}
+
+			@Override
+			public int executeQuery(ResultSet rs) throws SQLException {
+				// TODO Auto-generated method stub
+				if(rs.next()) {
+					int i_board = rs.getInt("i_board");
+					String title = rs.getNString("title");
+					String ctnt = rs.getNString("ctnt");
+					int hits = rs.getInt("hits");
+					int i_user = rs.getInt("i_user");
+					
+					BoardVO vo = new BoardVO();
+					
+					vo.setI_board(i_board);
+					vo.setTitle(title);
+					vo.setCtnt(ctnt);
+					vo.setHit(hits);
+					vo.setI_user(i_user);
+					list.add(vo);
+				}
+				return 1;
+			}
+			
+		});
+		return list;
 	}
 	
 }
