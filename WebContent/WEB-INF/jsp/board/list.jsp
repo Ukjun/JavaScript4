@@ -13,9 +13,13 @@
 	<h1>List</h1>
 	<table>
 	<tr>
-	<td>11</td>
 	<% for(BoardVO vo : list){ %>
 		<td><%=vo.getI_board()%></td>
+		<td><%=vo.getTitle()%></td>
+		<td><%=vo.getCtnt()%></td>
+		<td><%=vo.getHits()%></td>
+		<td><%=vo.getI_user()%></td>
+		<td><%=vo.getR_dt()%></td>
 	</tr>
 	<%} %>
 	</table>

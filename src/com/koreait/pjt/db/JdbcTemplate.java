@@ -1,6 +1,7 @@
 package com.koreait.pjt.db;
 
 import java.sql.*;
+import java.util.*;
 
 public class JdbcTemplate {
 	public static int excuteupdate(String sql,JdbcUpdateInterface jdbc) {
@@ -37,6 +38,23 @@ public class JdbcTemplate {
 		}
 		return result;
 		
+	}
+	public static List<?> executeQueryList(String sql, JdbcSelectInterface jdbc){
+		Connection conn = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		List <?> list = new ArrayList();
+		try {
+			conn = DBCon.getCon();
+			ps = conn.prepareStatement(sql);
+			rs = jdbc.prepared(ps);
+			list = jdbc.selBoard(rs);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			DBCon.close(conn, ps,rs);
+		}
+		return list;
 	}
 //	public static int excuteQuery(String sql,JdbcUpdateInterface jdbc) {
 //		int result = 0;

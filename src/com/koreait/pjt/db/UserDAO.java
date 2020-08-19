@@ -55,13 +55,18 @@ public class UserDAO {
 				}else
 				return 3;
 			}
+
+			@Override
+			public List<?> selBoard(ResultSet rs) {
+				// TODO Auto-generated method stub
+				return null;
+			}
 			
 		});
 	}
-	public static List<BoardVO> selBoardList(){
-		List<BoardVO> list = new ArrayList<BoardVO>();
+	public static List<?> selBoardList(){
 		String sql = "select i_board, title, ctnt, hits, i_user from t_board4 order by i_board";
-		JdbcTemplate.executeQuery(sql, new JdbcSelectInterface() {
+		return JdbcTemplate.executeQueryList(sql, new JdbcSelectInterface() {
 
 			@Override
 			public ResultSet prepared(PreparedStatement ps) throws SQLException {
@@ -72,27 +77,37 @@ public class UserDAO {
 			@Override
 			public int executeQuery(ResultSet rs) throws SQLException {
 				// TODO Auto-generated method stub
-				if(rs.next()) {
-					int i_board = rs.getInt("i_board");
-					String title = rs.getNString("title");
-					String ctnt = rs.getNString("ctnt");
-					int hits = rs.getInt("hits");
-					int i_user = rs.getInt("i_user");
-					
-					BoardVO vo = new BoardVO();
-					
-					vo.setI_board(i_board);
-					vo.setTitle(title);
-					vo.setCtnt(ctnt);
-					vo.setHit(hits);
-					vo.setI_user(i_user);
-					list.add(vo);
+				return 0;
+			}
+
+			@Override
+			public List<BoardVO> selBoard(ResultSet rs) {
+				// TODO Auto-generated method stub
+				List<BoardVO> list = new ArrayList();
+				try {
+					while(rs.next()) {
+						int i_board = rs.getInt("i_board");
+						String title = rs.getNString("title");
+						String ctnt = rs.getNString("ctnt");
+						int hits = rs.getInt("hits");
+						int i_user = rs.getInt("i_user");
+						
+						BoardVO vo = new BoardVO();
+						
+						vo.setI_board(i_board);
+						vo.setTitle(title);
+						vo.setCtnt(ctnt);
+						vo.setHit(hits);
+						vo.setI_user(i_user);
+						list.add(vo);
+					}
+				}catch(Exception e) {
+					e.printStackTrace();
 				}
-				return 1;
+				return list;
 			}
 			
 		});
-		return list;
 	}
 	
 }

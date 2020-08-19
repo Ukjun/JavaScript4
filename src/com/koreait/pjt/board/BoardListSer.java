@@ -29,10 +29,7 @@ public class BoardListSer extends HttpServlet {
 			response.sendRedirect("LoginSer");
 			return;
 		}
-		List<BoardVO> list = UserDAO.selBoardList();
-		for(BoardVO vo : list) {
-			System.out.println(vo.getI_board());
-		}
+		List<?> list = UserDAO.selBoardList();
 		System.out.println(hs.getAttribute(Const.LOGIN_USER));
 		
 		request.setAttribute("data", list);
