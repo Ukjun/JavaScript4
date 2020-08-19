@@ -24,6 +24,7 @@
 		<div><input type="text" name="user_id" id="user_id" placeholder="아이디" required value = "${data.user_id }"></div>
 		<div><input type="text" name="user_pw" id="user_pw" placeholder="비밀번호" required></div>
 		<div><input type="submit" id="button" value="로그인" onclick="check()"></div>
+		<div><input type="submit" id="button" value="회원가입" onclick="move()"></div>
 	</form>
 	</div>
 	<script>
@@ -33,6 +34,10 @@
 				frm.user_id.focus();
 				return false
 			}
+		}
+		function move(){
+			alert('회원가입 창으로 이동합니다');
+			location.href="/JoinSer"
 		}
 	</script>
 </body>

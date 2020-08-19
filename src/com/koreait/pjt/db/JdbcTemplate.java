@@ -11,7 +11,9 @@ public class JdbcTemplate {
 		try {
 			conn = DBCon.getCon();
 			ps = conn.prepareStatement(sql);
-			result = jdbc.update(conn, ps);
+			jdbc.update(conn, ps);
+			
+			result = ps.executeUpdate();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -29,7 +31,9 @@ public class JdbcTemplate {
 		try {
 			conn = DBCon.getCon();
 			ps = conn.prepareStatement(sql);
-			rs = jdbc.prepared(ps);
+			jdbc.prepared(ps);
+			
+			rs = ps.executeQuery();
 			result = jdbc.executeQuery(rs);
 		}catch(Exception e) {
 			e.printStackTrace();
@@ -47,7 +51,9 @@ public class JdbcTemplate {
 		try {
 			conn = DBCon.getCon();
 			ps = conn.prepareStatement(sql);
-			rs = jdbc.prepared(ps);
+			jdbc.prepared(ps);
+			
+			rs = ps.executeQuery();
 			list = jdbc.selBoard(rs);
 		}catch(Exception e) {
 			e.printStackTrace();

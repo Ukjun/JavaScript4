@@ -8,6 +8,18 @@ public class BoardVO {
 	private int i_user;
 	private String r_dt;
 	private String m_dt;
+	private String name;
+	
+	
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public void setHits(int hits) {
+		this.hits = hits;
+	}
 	public int getI_board() {
 		return i_board;
 	}
@@ -28,9 +40,6 @@ public class BoardVO {
 	}
 	public int getHits() {
 		return hits;
-	}
-	public void setHit(int hits) {
-		this.hits = hits;
 	}
 	public int getI_user() {
 		return i_user;

@@ -56,7 +56,6 @@ public class LoginSer extends HttpServlet {
 		}else if(result==1) {
 			response.sendRedirect("BoardListSer");
 			HttpSession hs = request.getSession();
-			System.out.println();
 			hs.setAttribute(Const.LOGIN_USER, user);
 			System.out.println("로그인 성공");
 			System.out.println("result : " + result);
