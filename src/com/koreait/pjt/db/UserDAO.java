@@ -12,7 +12,7 @@ public class UserDAO {
 		String sql ="Insert into t_user "
 				+"(i_user, user_id, user_pw, nm,email) "
 				+"values "
-				+"(seq_user.nextval,?,?,?,?) ";
+				+"(seq_user4.nextval,?,?,?,?) ";
 		//interface를 객체화 한것이 아니라 implements한 것
 		return JdbcTemplate.excuteupdate(sql, new JdbcUpdateInterface() {
 			@Override
@@ -23,6 +23,36 @@ public class UserDAO {
 				ps.setNString(3, param.getNm());
 				ps.setNString(4, param.getEmail());
 			}
+		});
+	}
+	
+	public static int detailUser(UserVO param) {
+		String sql = "select nm from t_user where i_user=?";
+		return JdbcTemplate.executeQuery(sql, new JdbcSelectInterface() {
+
+			@Override
+			public void prepared(PreparedStatement ps) throws SQLException {
+				// TODO Auto-generated method stub
+				ps.setInt(1, param.getI_user());
+			}
+
+			@Override
+			public int executeQuery(ResultSet rs) throws SQLException {
+				// TODO Auto-generated method stub
+				if(rs.next()) {
+					String nm = rs.getNString("nm");
+					param.setNm(nm);
+					return 1;
+				}else
+					return 2;
+			}
+
+			@Override
+			public List<?> selBoard(ResultSet rs) {
+				// TODO Auto-generated method stub
+				return null;
+			}
+			
 		});
 	}
 	public static int login(UserVO param) {

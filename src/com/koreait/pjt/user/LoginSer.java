@@ -54,6 +54,7 @@ public class LoginSer extends HttpServlet {
 			doGet(request,response);
 
 		}else if(result==1) {
+			System.out.println(user.getNm());
 			response.sendRedirect("BoardListSer");
 			HttpSession hs = request.getSession();
 			hs.setAttribute(Const.LOGIN_USER, user);

@@ -15,4 +15,12 @@ public class ViewResolver {
 		
 		
 	}
+	public static void forwardLoginCheck(String fileNm, HttpServletRequest request, 
+			HttpServletResponse response)throws ServletException, IOException{
+		if(MyUtils.isLogout(request)) {
+			response.sendRedirect("LoginSer");
+			return;
+		}
+		ViewResolver.forward(fileNm, request, response);
+	}
 }

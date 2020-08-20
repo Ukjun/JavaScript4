@@ -60,8 +60,10 @@ public class BoardDAO {
 	public static BoardVO detailBoardList(BoardVO para) {
 		// TODO Auto-generated method stub
 		BoardVO vo = new BoardVO();
-		String sql = "select i_board, title, ctnt, hits, i_user, r_dt "
-				+ "from t_board4 where i_board=?";
+		String sql = "select A.i_board, A.title, A.ctnt, A.hits, B.nm, A.r_dt,A.i_user "
+				+ "from t_board4 A inner join t_user B "
+				+ "on A.i_user = B.i_user "
+				+ "where i_board=?";
 		
 		JdbcTemplate.executeQuery(sql, new JdbcSelectInterface() {
 
@@ -79,13 +81,13 @@ public class BoardDAO {
 					vo.setTitle(rs.getNString("title"));
 					vo.setCtnt(rs.getNString("ctnt"));
 					vo.setHits(rs.getInt("hits"));
+					vo.setNm(rs.getNString("nm"));
 					vo.setI_user(rs.getInt("i_user"));
-					
 					vo.setR_dt(rs.getNString("r_dt"));
-					return 1;
-				}else
-					return 2;
-				
+					
+					
+				}
+				return 1;
 			}
 
 			@Override
@@ -100,7 +102,7 @@ public class BoardDAO {
 	
 	public static int insertList(BoardVO vo) {
 		String sql = "insert into t_board4(i_board, title, ctnt, i_user) "+
-	    		"values (seq_board4.nextval,?,?,?)";
+	    		"values (seq_user4.nextval,?,?,?)";
 		return JdbcTemplate.excuteupdate(sql, new JdbcUpdateInterface() {
 
 			@Override
@@ -109,6 +111,36 @@ public class BoardDAO {
 				ps.setNString(1, vo.getTitle());
 				ps.setNString(2, vo.getCtnt());
 				ps.setInt(3, vo.getI_user());
+			}
+			
+		});
+	}
+	
+	public static int deleteList(BoardVO vo) {
+		String sql = "delete from t_board4 where i_board=? and i_user=?";
+		
+		return JdbcTemplate.excuteupdate(sql, new JdbcUpdateInterface() {
+
+			@Override
+			public void update(Connection conn, PreparedStatement ps) throws SQLException {
+				// TODO Auto-generated method stub
+				ps.setInt(1, vo.getI_board());
+				ps.setInt(2, vo.getI_user());
+			}
+			
+		});
+	}
+	public static int updateList(BoardVO vo) {
+		//int i_board = vo.getI_board();
+		String sql = "update t_board4 set title=?,ctnt=? where i_board=?";
+		return JdbcTemplate.excuteupdate(sql, new JdbcUpdateInterface() {
+
+			@Override
+			public void update(Connection conn, PreparedStatement ps) throws SQLException {
+				// TODO Auto-generated method stub
+				ps.setNString(1, vo.getTitle());
+				ps.setNString(2, vo.getCtnt());
+				ps.setInt(3, vo.getI_board());
 			}
 			
 		});

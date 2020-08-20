@@ -6,12 +6,14 @@
 <!DOCTYPE html>
 <% List<BoardVO> list = (ArrayList)request.getAttribute("data");%>
 <html>
+<link href="https://fonts.googleapis.com/css2?family=Gamja+Flower&family=Nanum+Pen+Script&display=swap" rel="stylesheet">
 <head>
 <style>
-*{margin:0px auto; padding:0px;}
+*{margin:0px auto; padding:0px; font-family: 'Gamja Flower', cursive; font-size: 25px}
 #container{width: 800px; background-color: #EBE5E4;}
 #container h1{text-align: center;}
-h1{line-height: 100px;}
+.first{font-size: 20px;}
+h1{line-height: 100px; font-size: 50px;}
 table{margin: 0px auto; border-collapse: collapse;}
 td tr{border:1px dotted black;}
 td{
@@ -20,6 +22,9 @@ td{
 }
 th:not(:last-child) {
 	margin-right: 20px;	
+}
+th:last-child{
+	width: 150px;
 }
 .itemRow:hover {
 	cursor: pointer;
@@ -40,7 +45,7 @@ th:not(:last-child) {
 <body>
 <div id="container">
 	<!-- 로그인하면서 정보를 Const에 저장시켜놨음 -->
-	<div>${LoginUser.nm }님 환영합니다! </div>
+	<div class="first">${LoginUser.nm }님 환영합니다! </div>
 	<h1>List</h1>
 	<table>
 	<tr>

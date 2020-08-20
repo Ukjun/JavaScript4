@@ -3,11 +3,12 @@
 <!DOCTYPE html>
 <html>
 <head>
+<link href="https://fonts.googleapis.com/css2?family=Gamja+Flower&family=Nanum+Pen+Script&display=swap" rel="stylesheet">
 <style>
-* { margin: 0 px; padding: 0px;}
+* { margin: 0 px; padding: 0px;font-family: 'Gamja Flower', cursive; font-size: 25px}
 #container { width: 100%; height: 100vh; margin: 0 auto; text-align: center; background: #EBE5E4}
-#container h1{padding: 70px; color: #E0980C}
-#container form {text-align: center; margin-top: 100px;}
+#container h1{padding: 70px; color: #E0980C; font-size:50px;}
+#container form {text-align: center; margin-top: 70px;}
 #container form input { width: 300px; height: 50px; margin-bottom: 20px; border-radius : 20px; padding-left : 10px;}
 #container form #button{width : 150px}
 #container form input:focus{border : 5px solid #FFADC5; background-color: #FFCCCC}

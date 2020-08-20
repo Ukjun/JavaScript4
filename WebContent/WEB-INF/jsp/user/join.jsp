@@ -6,8 +6,9 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
+<link href="https://fonts.googleapis.com/css2?family=Gamja+Flower&family=Nanum+Pen+Script&display=swap" rel="stylesheet">
 <style>
-	* { margin: 0px; padding: 0px;}
+	* { margin: 0px; padding: 0px;font-family: 'Gamja Flower', cursive; font-size: 25px}
 	#container { width: 100%; height: 100vh; margin: 0 auto; text-align: center; background: #333333} 
 	#container h1{padding: 70px; color: #dedede}
 	#container form {text-align: center; margin-top: 100px;}

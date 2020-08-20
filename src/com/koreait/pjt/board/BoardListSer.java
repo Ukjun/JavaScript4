@@ -24,12 +24,6 @@ public class BoardListSer extends HttpServlet {
        
     
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		HttpSession hs = request.getSession();
-		if(hs.getAttribute(Const.LOGIN_USER)==null) {
-			
-			response.sendRedirect("LoginSer");
-			return;
-		}
 		// 리스트 목록 받아오기 
 		
 		
@@ -39,7 +33,7 @@ public class BoardListSer extends HttpServlet {
 		
 		// 리스트 내용 jsp로 전달해서 출력하기 위함
 		request.setAttribute("data", list);
-		ViewResolver.forward("board/list", request, response);
+		ViewResolver.forwardLoginCheck("board/list", request, response);
 	}
 
 	

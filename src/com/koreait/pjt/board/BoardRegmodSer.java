@@ -25,31 +25,23 @@ public class BoardRegmodSer extends HttpServlet {
     
 	//화면띄우는 용도(등록/수정)
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		HttpSession hs = request.getSession();
-		if(hs.getAttribute(Const.LOGIN_USER)==null) {
-			
-			response.sendRedirect("LoginSer");
-			return;
-		}
+		
 		String strI_board = request.getParameter("i_board");
 		
 		int i_board = MyUtils.parseStringToInt(strI_board, 0);
 		
-		System.out.println(i_board);
 		
 		vo.setI_board(i_board);
 		
-		ViewResolver.forward("board/regmod", request, response);
+		request.setAttribute("data", BoardDAO.detailBoardList(vo));
+		System.out.println("regmod i_board= " + i_board);
+		ViewResolver.forwardLoginCheck("board/regmod", request, response);
+		
 	}
 
 	//처리용도(DB에 등록/수정)
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession hs = request.getSession();
-		if(hs.getAttribute(Const.LOGIN_USER)==null) {
-			
-			response.sendRedirect("LoginSer");
-			return;
-		}
 		String strI_board = request.getParameter("i_board");
 		int i_board = MyUtils.parseStringToInt(strI_board, 0);
 		String title = request.getParameter("title");
@@ -64,8 +56,15 @@ public class BoardRegmodSer extends HttpServlet {
 		vo.setTitle(title);
 		vo.setCtnt(ctnt);
 		vo.setI_user(util.getI_user());
+		System.out.println("check i_board = " + i_board);
 		
-		result = BoardDAO.insertList(vo);
+		
+		if(i_board==0) {
+			result = BoardDAO.insertList(vo);
+		}else {
+			result = BoardDAO.updateList(vo);
+		}
+		
 		System.out.println("result : " + result);
 		System.out.println(vo.getI_user());
 		if(result==1) {
