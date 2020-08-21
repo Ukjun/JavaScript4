@@ -10,14 +10,15 @@
 <head>
 <style>
 *{margin:0px auto; padding:0px; font-family: 'Gamja Flower', cursive; font-size: 25px}
-#container{width: 800px; background-color: #EBE5E4;}
+body{background-color: #EBE5E4;}
+#container{width: 1000px; background-color: #EBE5E4;}
 #container h1{text-align: center;}
 .first{font-size: 20px;}
 h1{line-height: 100px; font-size: 50px;}
 table{margin: 0px auto; border-collapse: collapse;}
 td tr{border:1px dotted black;}
 td{
-	width:100px;
+	width:130px;
 	text-align: center;
 }
 th:not(:last-child) {
