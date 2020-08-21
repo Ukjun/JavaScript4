@@ -75,6 +75,7 @@ public class BoardDAO {
 
 			@Override
 			public int executeQuery(ResultSet rs) throws SQLException {
+				int count =0;
 				// TODO Auto-generated method stub
 				if(rs.next()) {
 					vo.setI_board(rs.getInt("i_board"));
@@ -84,8 +85,6 @@ public class BoardDAO {
 					vo.setNm(rs.getNString("nm"));
 					vo.setI_user(rs.getInt("i_user"));
 					vo.setR_dt(rs.getNString("r_dt"));
-					
-					
 				}
 				return 1;
 			}
@@ -143,6 +142,32 @@ public class BoardDAO {
 				ps.setInt(3, vo.getI_board());
 			}
 			
+		});
+	}
+	public static void updateCount(BoardVO vo) {
+		String sql = "update t_board4 set hits=hits+1 where i_board=?";
+		JdbcTemplate.excuteupdate(sql, new JdbcUpdateInterface() {
+
+			@Override
+			public void update(Connection conn, PreparedStatement ps) throws SQLException {
+				// TODO Auto-generated method stub
+				ps.setInt(1, vo.getI_board());
+			}
+			
+		});
+	}
+	public static void addHits(final int i_board) {
+		String sql = " UPDATE t_board4 "
+				+ " SET hits = hits + 1 "
+				+ " WHERE i_board = ? ";
+		JdbcTemplate.excuteupdate(sql, new JdbcUpdateInterface() {
+
+			@Override
+			public void update(Connection conn, PreparedStatement ps) throws SQLException {
+				// TODO Auto-generated method stub
+				ps.setInt(1, i_board);
+			}
+		
 		});
 	}
 }

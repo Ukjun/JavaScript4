@@ -4,6 +4,7 @@
     <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
     
    <link href="https://fonts.googleapis.com/css2?family=Gamja+Flower&family=Nanum+Pen+Script&display=swap" rel="stylesheet">
+   <link href="https://fonts.googleapis.com/css2?family=Raleway:ital@1&display=swap" rel="stylesheet">
 <!DOCTYPE html>
 <html>
 <head>

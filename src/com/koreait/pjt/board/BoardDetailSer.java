@@ -3,6 +3,7 @@ package com.koreait.pjt.board;
 import java.io.IOException;
 
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -29,18 +30,37 @@ public class BoardDetailSer extends HttpServlet {
 		String strI_board = request.getParameter("i_board");
 
 		int i_board = MyUtils.parseStringToInt(strI_board, 0);
+		BoardVO para = new BoardVO();
+		UserVO loginUser = MyUtils.getLoginUser(request);
+		if(loginUser ==null) {
+			response.sendRedirect("LoginSer");
+			return;
+		}
+		// 글작성시의 i_user와 로그인했을때의 i_user가 같지않을때 true가 반환되서 조회수올리기를 실행 
+//		ServletContext application = getServletContext();
+//		Integer readI_user = (Integer)application.getAttribute("read_" + strI_board);
+//		if(readI_user != loginUser.getI_user()) {
+//			
+//			para.setI_board(i_board);
+//			BoardDAO.addHits(i_board);
+//			application.setAttribute("read_"+strI_board,loginUser.getI_user());
+//		}
+		
+//		para.setI_board(i_board);
+//		BoardDAO.addHits(i_board);
+//		request.setAttribute("data", BoardDAO.detailBoardList(para));
+//		ViewResolver.forwardLoginCheck("board/detail", request, response);
+		
+				
 		System.out.println("i_board = " + i_board);
 		if(i_board==0) {
 			response.sendRedirect("/BoardListSer");
 			return;
 		}else {
-			BoardVO para = new BoardVO();
 			para.setI_board(i_board);
-//			para.setName(name);
-			BoardVO vo = BoardDAO.detailBoardList(para);
-			request.setAttribute("data", vo);
-			//request.setAttribute("data", util);
-			System.out.println(vo.getTitle());
+			BoardDAO.updateCount(para);
+			System.out.println("count: " + para.getHits());
+			request.setAttribute("data", BoardDAO.detailBoardList(para));
 			ViewResolver.forwardLoginCheck("board/detail", request, response);
 		}	
 	}

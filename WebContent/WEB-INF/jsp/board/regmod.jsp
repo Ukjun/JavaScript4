@@ -25,12 +25,15 @@
 <body>
 	<div id="container">
 		<h2 class="h33">게시글작성</h2>
-		<form id="frm"action="BoardRegmodSer" method="post">
-			<div><input class="ipt" type="text" class="input"name="title" placeholder="제목을 작성해주세요" value="${data.title}" style="color:#ffffff; font-weight:bold;"></div>
-			<div><textarea class="tpt" name="cont" placeholder="내용을 작성해주세요" style="color:#ffffff;">${data.ctnt}</textarea></div>
+		<form id="frm" action="BoardRegmodSer" method="post">
+			<div><input class="ipt" type="text" class="input"name="title" placeholder="제목을 작성해주세요" value="${data.title}" style=color:#ffffff;></div>
+			<div><textarea class="tpt" name="ctnt" placeholder="내용을 작성해주세요" style="color:#ffffff;">${data.ctnt}</textarea></div>
 			<input type="hidden" name="i_board" value="${data.i_board}">
 			<div><input id="button" type="submit" value="등록"></div>
 		</form>
 	</div>
 </body>
+<script>
+	
+</script>
 </html>

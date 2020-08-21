@@ -20,6 +20,7 @@ td tr{border:1px dotted black;}
 td{
 	width:130px;
 	text-align: center;
+	border-bottom: 1px solid black;
 }
 th:not(:last-child) {
 	margin-right: 20px;	
@@ -46,7 +47,7 @@ th:last-child{
 <body>
 <div id="container">
 	<!-- 로그인하면서 정보를 Const에 저장시켜놨음 -->
-	<div class="first">${LoginUser.nm }님 환영합니다! </div>
+	<div class="first">${LoginUser.nm }님 환영합니다! <a href="/user/logout">로그아웃</a></div>
 	<h1>List</h1>
 	<table>
 	<tr>
@@ -59,7 +60,7 @@ th:last-child{
 	</tr>
 	<tr>
 	<!-- 주소 이동에서 앞에 /를 붙이지않으면 뒤에 주소로만 가고 붙이면 앞주소기준으로 간다 -->
-		<a href = "/BoardRegmodSer">글쓰기</a>
+		<a href="/BoardRegmodSer">글쓰기</a>
 	</tr>
 	<c:choose>
 		<c:when test="${empty data}">
