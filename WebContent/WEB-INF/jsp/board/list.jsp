@@ -9,7 +9,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Gamja+Flower&family=Nanum+Pen+Script&display=swap" rel="stylesheet">
 <head>
 <style>
-*{margin:0px auto; padding:0px; font-family: 'Gamja Flower', cursive; font-size: 25px}
+*{margin:0px auto; padding:0px; font-family: 'Gamja Flower', sans-serif; font-size: 25px}
 body{background-color: #EBE5E4;}
 #container{width: 1000px; background-color: #EBE5E4;}
 #container h1{text-align: center;}
@@ -47,7 +47,7 @@ th:last-child{
 <body>
 <div id="container">
 	<!-- 로그인하면서 정보를 Const에 저장시켜놨음 -->
-	<div class="first">${LoginUser.nm }님 환영합니다! <a href="/user/logout">로그아웃</a></div>
+	<div class="first">${LoginUser.nm }님 환영합니다! <a href="/logout">로그아웃</a></div>
 	<h1>List</h1>
 	<table>
 	<tr>
@@ -75,9 +75,10 @@ th:last-child{
 				<td>${item.i_board }</td>
 				<td>${item.title }</td>
 				<td>${item.ctnt }</td>
-				<td>${item.hits }</td>
+		 		<td>${item.hits }</td>
 				<td>${item.i_user }</td>
 				<td>${item.r_dt }</td>
+				<!-- <td><input type="button" value="좋아요"></td> -->
 			</tr>
 		</c:forEach>
 	</c:otherwise>

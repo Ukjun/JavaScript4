@@ -37,6 +37,7 @@
 				<form id="frm" action="/board/del" method="post">
 					<input type="hidden" name="i_board" value="${data.i_board}">
 					<a href="#" class="mar_l" onclick="submitDel()">삭제</a>
+					<a href="#" class="mar_l" onclick="likeCount()">좋아요  ${data.like }</a>
 				</form>
 			</c:if>
 		</div>
@@ -82,6 +83,12 @@
 			{
 				frm.submit();
 			}
+		}
+		
+		function likeCount(){
+			var check = `{data.like}`;
+			check++;
+			console.log(check)
 		}
 	</script>
 </body>

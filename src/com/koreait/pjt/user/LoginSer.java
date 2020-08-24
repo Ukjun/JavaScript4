@@ -11,6 +11,7 @@ import javax.servlet.http.HttpSession;
 import com.koreait.pjt.MyUtils;
 import com.koreait.pjt.ViewResolver;
 import com.koreait.pjt.db.UserDAO;
+import com.koreait.pjt.vo.UserLoginHistoryVO;
 import com.koreait.pjt.vo.UserVO;
 
 
@@ -22,6 +23,10 @@ public class LoginSer extends HttpServlet {
        
     
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		if(!MyUtils.isLogout(request)) {
+			response.sendRedirect("BoardListSer");
+			return;
+		}
 		ViewResolver.forward("user/login", request, response);
 	}
 
@@ -36,6 +41,26 @@ public class LoginSer extends HttpServlet {
 		String msg = null;
 		
 		int result = UserDAO.login(user);
+		String agent =request.getHeader("User-Agent");
+		System.out.println("agent: " + agent);
+
+		String browser = getBrowser(agent);
+		String ip_addr = request.getRemoteAddr();
+		String os = getOS(agent);
+		System.out.println("os: " + os);
+		System.out.println("browser: " + browser);
+		System.out.println("ip_addr: " + ip_addr);
+		UserLoginHistoryVO ulhVO = new UserLoginHistoryVO();
+		ulhVO.setI_user(user.getI_user());
+		ulhVO.setOs(os);
+		ulhVO.setIp_addr(ip_addr);
+		ulhVO.setBrowser(browser);
+		
+		int result2 = UserDAO.insUserLoginHistory(ulhVO);
+		System.out.println("ip result: " + result2);
+		request.setAttribute("data", ulhVO);
+		//로그인 히스토리 기록
+		
 		
 		
 		if(result!=1) {
@@ -52,6 +77,8 @@ public class LoginSer extends HttpServlet {
 			request.setAttribute("data", user);
 			request.setAttribute("msg", msg);
 			doGet(request,response);
+			
+			
 
 		}else if(result==1) {
 			System.out.println(user.getNm());
@@ -60,8 +87,8 @@ public class LoginSer extends HttpServlet {
 			hs.setAttribute(Const.LOGIN_USER, user);
 			System.out.println("로그인 성공");
 			System.out.println("result : " + result);
-			return;
 		}
+		
 		
 //		if(result !=1) {
 //			request.setAttribute("data", user);
@@ -70,6 +97,33 @@ public class LoginSer extends HttpServlet {
 //		}
 		
 		
+	}
+	private String getBrowser(String agent) {
+		if(agent.toLowerCase().contains("msie")) {
+			return "ie";
+		}else if (agent.toLowerCase().contains("chrome")) {
+			return "chrome";
+		}else if (agent.toLowerCase().contains("safari")) {
+			return "safari";
+		}
+		return "";
+	}
+	private String getOS(String agent) {
+		if(agent.toLowerCase().contains("mac")) {
+			return "mac";
+		}else if (agent.toLowerCase().contains("windows")) {
+			return "windows";
+		}else if (agent.toLowerCase().contains("x11")) {
+			return "unix";
+		}else if (agent.toLowerCase().contains("android")) {
+			return "android";
+		}else if (agent.toLowerCase().contains("iphone")) {
+			return "iOS";
+		}else if (agent.toLowerCase().contains("linux")) {
+			return "linux";
+		}
+		
+		return "";
 	}
 
 }

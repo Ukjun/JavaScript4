@@ -51,15 +51,22 @@ public class BoardDetailSer extends HttpServlet {
 //		request.setAttribute("data", BoardDAO.detailBoardList(para));
 //		ViewResolver.forwardLoginCheck("board/detail", request, response);
 		
-				
+		
+		
+		
+		
+		
 		System.out.println("i_board = " + i_board);
 		if(i_board==0) {
 			response.sendRedirect("/BoardListSer");
 			return;
 		}else {
 			para.setI_board(i_board);
+			para.setI_user(loginUser.getI_user());
 			BoardDAO.updateCount(para);
+			int check = BoardDAO.likeCheck(para);
 			System.out.println("count: " + para.getHits());
+			System.out.println("likecheck: " + check);
 			request.setAttribute("data", BoardDAO.detailBoardList(para));
 			ViewResolver.forwardLoginCheck("board/detail", request, response);
 		}	

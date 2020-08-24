@@ -5,9 +5,28 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.koreait.pjt.vo.BoardVO;
+import com.koreait.pjt.vo.UserLoginHistoryVO;
 import com.koreait.pjt.vo.UserVO;
 
 public class UserDAO {
+	public static int insUserLoginHistory(UserLoginHistoryVO param) {
+		String sql ="insert into t_user_loginhistory "
+				+ "(i_history, i_user, ip_addr, os, browser) "
+				+ "values "
+				+ "(seq_userloginhistory.nextval,?,?,?,?) ";
+		return JdbcTemplate.excuteupdate(sql, new JdbcUpdateInterface() {
+
+			@Override
+			public void update(Connection conn, PreparedStatement ps) throws SQLException {
+				// TODO Auto-generated method stub
+				ps.setInt(1, param.getI_user());
+				ps.setNString(2, param.getIp_addr());
+				ps.setNString(3, param.getOs());
+				ps.setNString(4, param.getBrowser());
+			}
+			
+		});
+	}
 	public static int insUser(UserVO param) {
 		String sql ="Insert into t_user "
 				+"(i_user, user_id, user_pw, nm,email) "

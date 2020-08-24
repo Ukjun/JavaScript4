@@ -170,4 +170,48 @@ public class BoardDAO {
 		
 		});
 	}
+	
+	public static int likeCheck(BoardVO vo) {
+		String sql = "select A.i_board, A.title, A.ctnt, A.hits, A.i_user, "
+				+ "A.r_dt, B.nm, decode(C.i_user,null,0,1)as yn_like "
+				+ "from t_board4 A inner join t_user B "
+				+ "on A.i_user = B.i_user "
+				+ "left join t_board4_like C "
+				+ "on A.i_board = C.i_board and C.i_user=? "
+				+ "where A.i_board=? ";
+		return JdbcTemplate.executeQuery(sql, new JdbcSelectInterface() {
+
+			@Override
+			public void prepared(PreparedStatement ps) throws SQLException {
+				// TODO Auto-generated method stub
+				ps.setInt(1, vo.getI_user());
+				ps.setInt(2, vo.getI_board());
+			}
+
+			@Override
+			public int executeQuery(ResultSet rs) throws SQLException {
+				// TODO Auto-generated method stub
+				if(rs.next()) {
+					vo.setI_board(rs.getInt("i_board"));
+					vo.setTitle(rs.getNString("title"));
+					vo.setCtnt(rs.getNString("ctnt"));
+					vo.setHits(rs.getInt("hits"));
+					vo.setI_user(rs.getInt("i_user"));
+					vo.setR_dt(rs.getNString("r_dt"));
+					vo.setNm(rs.getNString("nm"));
+					vo.setLike(rs.getInt("yn_like"));
+					return 1;
+				}else
+					return 2;
+				
+			}
+
+			@Override
+			public List<?> selBoard(ResultSet rs) {
+				// TODO Auto-generated method stub
+				return null;
+			}
+			
+		});
+	}
 }

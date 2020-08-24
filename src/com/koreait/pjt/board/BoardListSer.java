@@ -32,6 +32,7 @@ public class BoardListSer extends HttpServlet {
 		System.out.println(list.size());
 		
 		// 리스트 내용 jsp로 전달해서 출력하기 위함
+		
 		request.setAttribute("data", list);
 		ViewResolver.forwardLoginCheck("board/list", request, response);
 	}
