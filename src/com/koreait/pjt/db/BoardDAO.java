@@ -128,7 +128,7 @@ public class BoardDAO {
 	}
 	
 	public static int deleteList(BoardVO vo) {
-		String sql = "delete from t_board4 where i_board=? and i_user=?";
+		String sql = "delete from t_board4 where i_board=? and i_user=? ";
 		
 		return JdbcTemplate.excuteupdate(sql, new JdbcUpdateInterface() {
 
@@ -197,7 +197,7 @@ public class BoardDAO {
 	}
 	
 	public static void toggleDelete(BoardVO vo) {
-		String sql = "delete from t_board4_like where i_board=? and i_user=?";
+		String sql = "delete from t_board4_like where i_board=? and i_user=? ";
 		JdbcTemplate.excuteupdate(sql, new JdbcUpdateInterface() {
 			
 			@Override

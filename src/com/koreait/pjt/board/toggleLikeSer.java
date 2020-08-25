@@ -40,11 +40,10 @@ public class toggleLikeSer extends HttpServlet {
 		System.out.println("user: " + loginUser.getI_user());
 		if(yn_like==1) {
 			BoardDAO.toggleDelete(para);
-			response.sendRedirect("/board/detail?i_board="+i_board);
 		}else {
 			BoardDAO.toggleInsert(para);
-			response.sendRedirect("/board/detail?i_board="+i_board);
 		}
+		response.sendRedirect("/board/detail?i_board="+i_board);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
