@@ -16,13 +16,14 @@ import com.koreait.pjt.ViewResolver;
 import com.koreait.pjt.db.BoardDAO;
 import com.koreait.pjt.db.UserDAO;
 import com.koreait.pjt.user.Const;
+import com.koreait.pjt.vo.BoardDomain;
 import com.koreait.pjt.vo.BoardVO;
 import com.koreait.pjt.vo.UserVO;
 
 /**
  * Servlet implementation class BoardDetailSer
  */
-@WebServlet("/BoardDetailSer")
+@WebServlet("/board/detail")
 public class BoardDetailSer extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     
@@ -31,9 +32,10 @@ public class BoardDetailSer extends HttpServlet {
 
 		int i_board = MyUtils.parseStringToInt(strI_board, 0);
 		BoardVO para = new BoardVO();
+		BoardDomain domain = new BoardDomain();
 		UserVO loginUser = MyUtils.getLoginUser(request);
 		if(loginUser ==null) {
-			response.sendRedirect("LoginSer");
+			response.sendRedirect("/login");
 			return;
 		}
 		// 글작성시의 i_user와 로그인했을때의 i_user가 같지않을때 true가 반환되서 조회수올리기를 실행 
@@ -58,15 +60,13 @@ public class BoardDetailSer extends HttpServlet {
 		
 		System.out.println("i_board = " + i_board);
 		if(i_board==0) {
-			response.sendRedirect("/BoardListSer");
+			response.sendRedirect("/board/list");
 			return;
 		}else {
 			para.setI_board(i_board);
 			para.setI_user(loginUser.getI_user());
 			BoardDAO.updateCount(para);
-			int check = BoardDAO.likeCheck(para);
-			System.out.println("count: " + para.getHits());
-			System.out.println("likecheck: " + check);
+			//int check = BoardDAO.likeCheck(para);
 			request.setAttribute("data", BoardDAO.detailBoardList(para));
 			ViewResolver.forwardLoginCheck("board/detail", request, response);
 		}	

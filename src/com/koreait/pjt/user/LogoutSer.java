@@ -19,7 +19,7 @@ public class LogoutSer extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession hs = request.getSession();
 		hs.invalidate();
-		response.sendRedirect("/LoginSer");
+		response.sendRedirect("/login");
 	}
 
 	/**

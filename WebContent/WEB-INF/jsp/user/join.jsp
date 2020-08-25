@@ -24,8 +24,8 @@
 		<hr>
 		<form id="frm" action="/JoinSer" method="post" onsubmit="return chk()">
 			<div><input type="text" name="user_id" id="user_id"placeholder=" 아이디" required value = "${data.user_id }"></div>
-			<div><input type="text" name="user_pw" placeholder=" 비밀번호" required></div>
-			<div><input type="text" name="user_pwre" placeholder=" 비밀번호 확인" required></div>
+			<div><input type="password" name="user_pw" placeholder=" 비밀번호" required ></div>
+			<div><input type="password" name="user_pwre" placeholder=" 비밀번호 확인" required></div>
 			<div><input type ="text" name ="nm" id="nm"placeholder=" 이름" required value = "${data.nm }"></div>
 			<div><input type ="email" name ="email" id="email"placeholder=" 이메일" required value = "${data.email }"></div>
 			<div><input type="submit" id="button" value=" 회원가입"></div>

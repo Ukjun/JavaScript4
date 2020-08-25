@@ -15,7 +15,7 @@ import com.koreait.pjt.vo.UserVO;
 /**
  * Servlet implementation class JoinSer
  */
-@WebServlet("/JoinSer")
+@WebServlet("/join")
 public class JoinSer extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -53,7 +53,7 @@ public class JoinSer extends HttpServlet {
 			doGet(request,response);
 			return;
 		}else if(result==1) {
-			response.sendRedirect("LoginSer");
+			response.sendRedirect("/login");
 		}
 	}
 

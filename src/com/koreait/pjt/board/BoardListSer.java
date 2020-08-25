@@ -18,7 +18,7 @@ import com.koreait.pjt.vo.BoardVO;
 import com.koreait.pjt.vo.UserVO;
 
 
-@WebServlet("/BoardListSer")
+@WebServlet("/board/list")
 public class BoardListSer extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        

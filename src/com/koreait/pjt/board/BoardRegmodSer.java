@@ -18,7 +18,7 @@ import com.koreait.pjt.vo.UserVO;
 /**
  * Servlet implementation class BoardRegmodSer
  */
-@WebServlet("/BoardRegmodSer")
+@WebServlet("/board/regmod")
 public class BoardRegmodSer extends HttpServlet {
 	BoardVO vo = new BoardVO();
 	private static final long serialVersionUID = 1L;
@@ -68,7 +68,7 @@ public class BoardRegmodSer extends HttpServlet {
 		System.out.println("result : " + result);
 		System.out.println(vo.getI_user());
 		if(result==1) {
-			response.sendRedirect("/BoardListSer");
+			response.sendRedirect("/board/list");
 		}
 	}
 

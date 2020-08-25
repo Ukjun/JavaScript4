@@ -8,14 +8,7 @@ public class BoardVO {
 	private int i_user;
 	private String r_dt;
 	private String m_dt;
-	private String nm;
-	private int like;
-	public int getLike() {
-		return like;
-	}
-	public void setLike(int like) {
-		this.like = like;
-	}
+	
 	public int getI_board() {
 		return i_board;
 	}
@@ -30,7 +23,7 @@ public class BoardVO {
 	}
 	public String getCtnt() {
 		return ctnt;
-	}
+	} 
 	public void setCtnt(String ctnt) {
 		this.ctnt = ctnt;
 	}
@@ -58,13 +51,5 @@ public class BoardVO {
 	public void setM_dt(String m_dt) {
 		this.m_dt = m_dt;
 	}
-	public String getNm() {
-		return nm;
-	}
-	public void setNm(String nm) {
-		this.nm = nm;
-	}
-	
-	
 	
 }

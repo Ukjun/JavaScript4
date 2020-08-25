@@ -17,14 +17,14 @@ import com.koreait.pjt.vo.UserVO;
 
 
 
-@WebServlet("/LoginSer")
+@WebServlet("/login")
 public class LoginSer extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		if(!MyUtils.isLogout(request)) {
-			response.sendRedirect("BoardListSer");
+			response.sendRedirect("/board/list");
 			return;
 		}
 		ViewResolver.forward("user/login", request, response);
@@ -82,7 +82,7 @@ public class LoginSer extends HttpServlet {
 
 		}else if(result==1) {
 			System.out.println(user.getNm());
-			response.sendRedirect("BoardListSer");
+			response.sendRedirect("/board/list");
 			HttpSession hs = request.getSession();
 			hs.setAttribute(Const.LOGIN_USER, user);
 			System.out.println("로그인 성공");

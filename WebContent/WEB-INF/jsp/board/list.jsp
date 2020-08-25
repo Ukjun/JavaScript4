@@ -10,8 +10,8 @@
 <head>
 <style>
 *{margin:0px auto; padding:0px; font-family: 'Gamja Flower', sans-serif; font-size: 25px}
-body{background-color: #EBE5E4;}
-#container{width: 1000px; background-color: #EBE5E4;}
+#container{width: 1000px; }
+#tableCon{background-color: #F0FFF0;}
 #container h1{text-align: center;}
 .first{font-size: 20px;}
 h1{line-height: 100px; font-size: 50px;}
@@ -49,7 +49,7 @@ th:last-child{
 	<!-- 로그인하면서 정보를 Const에 저장시켜놨음 -->
 	<div class="first">${LoginUser.nm }님 환영합니다! <a href="/logout">로그아웃</a></div>
 	<h1>List</h1>
-	<table>
+	<table id="tableCon">
 	<tr>
 		<th>No</th>
 		<th>제 목</th>
@@ -60,7 +60,7 @@ th:last-child{
 	</tr>
 	<tr>
 	<!-- 주소 이동에서 앞에 /를 붙이지않으면 뒤에 주소로만 가고 붙이면 앞주소기준으로 간다 -->
-		<a href="/BoardRegmodSer">글쓰기</a>
+		<a href="/board/regmod">글쓰기</a>
 	</tr>
 	<c:choose>
 		<c:when test="${empty data}">
@@ -100,7 +100,7 @@ th:last-child{
 <script>
 function moveToDetail(i_board){
 	console.log('moveToDetailSer - i_board:'+i_board)
-	location.href ="BoardDetailSer?i_board="+i_board;
+	location.href ="/board/detail?i_board="+i_board;
 }
 </script>
 </html>

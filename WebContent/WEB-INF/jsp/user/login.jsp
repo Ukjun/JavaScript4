@@ -6,13 +6,13 @@
 <link href="https://fonts.googleapis.com/css2?family=Gamja+Flower&family=Nanum+Pen+Script&display=swap" rel="stylesheet">
 <style>
 * { margin: 0 px; padding: 0px;font-family: 'Gamja Flower', cursive; font-size: 25px}
-#container { width: 100%; height: 100vh; margin: 0 auto; text-align: center; background: #EBE5E4}
+#container { width: 500px; height: 600px; margin: 0 auto; text-align: center; background: #F0FFF0}
 #container h1{padding: 70px; color: #E0980C; font-size:50px;}
 #container form {text-align: center; margin-top: 70px;}
 #container form input { width: 300px; height: 50px; margin-bottom: 20px; border-radius : 20px; padding-left : 10px;}
 #container form #button{width : 150px}
 #container form input:focus{border : 5px solid #FFADC5; background-color: #FFCCCC}
-#container form input::placeholder{color: white}
+#container form input::placeholder{color: black}
 </style>
 <meta charset="UTF-8">
 <title>Insert title here</title>
@@ -21,7 +21,7 @@
 	<div id="container">
 	<h1>로그인</h1>
 	<div>${msg }</div>
-	<form id="frm" action="LoginSer" method="post">
+	<form id="frm" action="/login" method="post">
 		<div><input type="text" name="user_id" id="user_id" placeholder="아이디" required value = "${data.user_id }"></div>
 		<div><input type="text" name="user_pw" id="user_pw" placeholder="비밀번호" required></div>
 		<div><input type="submit" id="button" value="로그인" onclick="check()"></div>
@@ -38,7 +38,7 @@
 		}
 		function move(){
 			alert('회원가입 창으로 이동합니다');
-			location.href="/JoinSer"
+			location.href="/join"
 		}
 	</script>
 </body>

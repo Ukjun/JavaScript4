@@ -16,7 +16,7 @@ import com.koreait.pjt.vo.UserVO;
 /**
  * Servlet implementation class BoardDelSer
  */
-@WebServlet("/BoardDelete")
+@WebServlet("/board/delete")
 public class BoardDelSer extends HttpServlet {
 	BoardVO vo = new BoardVO();
 	private static final long serialVersionUID = 1L;
@@ -38,7 +38,7 @@ public class BoardDelSer extends HttpServlet {
 		String strI_board = request.getParameter("i_board");
 		int i_board = MyUtils.parseStringToInt(strI_board, 0);
 		if(loginUser==null) {
-			response.sendRedirect("LoginSer");
+			response.sendRedirect("/login");
 			return;
 		}
 		vo.setI_board(i_board);
@@ -46,9 +46,9 @@ public class BoardDelSer extends HttpServlet {
 		int result = BoardDAO.deleteList(vo);
 		System.out.println("delete result: "+ result);
 		if(result ==1) {
-			response.sendRedirect("/BoardListSer");
+			response.sendRedirect("/board/list");
 		}else {
-			response.sendRedirect("/BoardDetailSer");
+			response.sendRedirect("/board/detail");
 		}
 	}
 
