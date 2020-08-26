@@ -10,6 +10,10 @@ import com.koreait.pjt.user.Const;
 import com.koreait.pjt.vo.UserVO;
 
 public class MyUtils {
+	public static int getIntParameter(HttpServletRequest request, String keyNm) {
+		return parseStringToInt(request.getParameter(keyNm),0);
+	}
+	
 	public static String encryptString(String str) {
 		String sha = "";
 

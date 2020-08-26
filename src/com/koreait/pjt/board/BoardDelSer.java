@@ -9,7 +9,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.koreait.pjt.MyUtils;
 import com.koreait.pjt.ViewResolver;
+import com.koreait.pjt.db.BoardCmtDAO;
 import com.koreait.pjt.db.BoardDAO;
+import com.koreait.pjt.vo.BoardCmtVO;
 import com.koreait.pjt.vo.BoardVO;
 import com.koreait.pjt.vo.UserVO;
 
@@ -35,12 +37,15 @@ public class BoardDelSer extends HttpServlet {
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		UserVO loginUser = MyUtils.getLoginUser(request);
-		String strI_board = request.getParameter("i_board");
-		int i_board = MyUtils.parseStringToInt(strI_board, 0);
 		if(loginUser==null) {
 			response.sendRedirect("/login");
 			return;
 		}
+		String strI_board = request.getParameter("i_board");
+		int i_board = MyUtils.parseStringToInt(strI_board, 0);
+		
+		 
+		
 		vo.setI_board(i_board);
 		vo.setI_user(loginUser.getI_user());
 		int result = BoardDAO.deleteList(vo);

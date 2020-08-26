@@ -29,10 +29,11 @@
 	.l_td { padding-left: 10px; width: 100px;}
 	.m_td { padding-left: 10px;}
 	.d_td { width: 200px;}
-	.n_td { width: 70px;}
-	.t_td { width: 120px;}
+	.n_td { width: 100px;}
+	.t_td { width: 180px;}
 	.material-icons{color: #000000; cursor: pointer;}
-</style>
+	#reg_cmt { visibility: hidden;}
+</style> 
 </head>
 <body>
 	<div id="container">
@@ -43,7 +44,6 @@
 				<form id="frm" action="/board/delete" method="post">
 					<input type="hidden" name="i_board" value="${data.i_board}">
 					<a href="#" class="mar_l" onclick="submitDel()">삭제</a>
-					
 				</form>
 			</c:if>
 		</div>
@@ -85,7 +85,6 @@
 				<div>
 					<input type="text" name="cmt" placeholder="댓글을 입력하세요">
 					<input type = "submit" value="입력">
-					
 				</div>
 			</form>
 		</div>
@@ -96,28 +95,48 @@
 				<th>작성자</th>
 				<th>작성 내용</th>
 				<th>작성 일자</th>
-				<th>수정 일자</th>
+				<th>비 고 </th>
 			</tr>
 		 	<c:forEach items="${allList}" var="item">
 				<tr class="itemRow">
-					<td class="n_td"><c:out value="${item.nm }"></c:out></td>
+					<td class="n_td"><c:out value="${item.nm } 'kkk'"></c:out></td>
 					<td class="n_td"><c:out value="${item.cmt }"></c:out></td>
 					<td class="t_td"><c:out value="${item.r_dt }"></c:out></td>
-					<td class="t_td"><c:out value="${item.m_dt }"></c:out></td>
-					<a href="/board/cmt?i_board=${item.i_board}" class="mar_l">수정</a>
-					<a href="/board/cmt?i_board=${item.i_board}" class="mar_l">삭제</a>
+					<td>
+					<c:if test="${LoginUser.i_user == item.i_user}">
+						<%-- <a href="/board/regmod?i_board=${allList.i_board}" class="mar_l">수정</a> --%>
+							<a href="#" onclick="onregCmt()">수정</a>
+							<a href="/board/cmt?i_board=${data.i_board }&i_cmt=${item.i_cmt}" class="mar_l">삭제</a>
+						
+					</c:if>
+					</td>
 				</tr>
+				 <tr>
+					<td id="reg_cmt">
+						<form  id="cmtFrm2" action="/board/cmt" method="post">
+							<input type="text"name = "cmt" value=${item.cmt }>
+							<input type ="hidden" name="i_cmt" value="2">
+							<input type = "submit" value="수정">
+						</form>
+					</td>
+				</tr>  
 			</c:forEach>
 			</table>
 		</div>
 	</div>
 	<script>
+	
 		function submitDel()
 		{
 			confirm('삭제하시겠습니까?')
 			{
 				frm.submit();
 			}
+		}
+		
+		function onregCmt(){
+			var item = document.getElementById("reg_cmt");
+			item.style.visibility = "visible";
 		}
 		
 		function likeCount(){

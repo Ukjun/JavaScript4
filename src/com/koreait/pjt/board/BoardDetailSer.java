@@ -65,10 +65,14 @@ public class BoardDetailSer extends HttpServlet {
 			para.setI_board(i_board);
 			para.setI_user(loginUser.getI_user());
 			BoardDAO.updateCount(para);
+			
+			
 			//int check = BoardDAO.likeCheck(para);
 			List<?> list = BoardCmtDAO.selCmt(i_board);
 			request.setAttribute("allList", list);
 			System.out.println("cmt list size: " + list.size());
+			
+			
 			request.setAttribute("data", BoardDAO.detailBoardList(para));
 			ViewResolver.forwardLoginCheck("board/detail", request, response);
 		}	

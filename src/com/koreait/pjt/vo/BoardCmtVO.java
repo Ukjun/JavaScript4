@@ -7,14 +7,7 @@ public class BoardCmtVO extends BoardVO{
 	private String cmt;
 	private String r_dt;
 	private String m_dt;
-	private String nm;
 	
-	public String getNm() {
-		return nm;
-	}
-	public void setNm(String nm) {
-		this.nm = nm;
-	}
 	public int getI_cmt() {
 		return i_cmt;
 	}
