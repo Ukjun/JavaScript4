@@ -9,14 +9,14 @@
 </head>
 <style>
 	* { margin: 0px; padding: 0px;}
-	body {background: #D3F3ED;  margin-top : 150px; font-family: 'Gamja Flower', cursive; font-size: 25px;}
-	#frm{ width:830px; height: 600px;; margin: 0 auto;}
+	body {background: #F0FFF0; margin-top : 50px; font-family: 'Gamja Flower', cursive; font-size: 25px;}
+	#frm{ width:600px; height: 600px;; margin: 0 auto;}
 
 	.h33 {color: black;}
-	#container { padding-top: 70px; text-align: center; width: 1000px; height: 650px; margin: 0 auto; background: #F0FFF0;} 
-	.ipt{ font-family: 'Gamja Flower', cursive; font-size: 25px; margin-top: 50px; boarder: 3px solid #000000; width: 800px; height: 45px; padding-left:20px; background:#C8EE9D; color: #000000;}
-	.tpt{ font-family: 'Gamja Flower', cursive; font-size: 25px; margin-top: 20px; boarder: 3px solid #000000; width: 800px; height: 300px; padding: 10px; background:#C8EE9D;}
-	#button { font-family: 'Gamja Flower', cursive; font-size: 25px; border: 1px solid black; margin-top: 80px; margin-bottom:30px; width: 100px; height: 40px; color: #000000; background: #9197B5; border: none;}
+	#container { padding-top: 70px; text-align: center; width: 1000px; height: 650px; margin: 0 auto; } 
+	.ipt{ font-family: 'Gamja Flower', cursive; font-size: 25px; margin-top: 50px; boarder: 3px solid #000000; width: 600px; height: 45px; padding-left:20px; background:#C8EE9D; color: #000000;}
+	.tpt{ font-family: 'Gamja Flower', cursive; font-size: 25px; margin-top: 20px; boarder: 3px solid #000000; width: 600px; height: 300px; padding: 10px; background:#C8EE9D;}
+	#button { font-family: 'Gamja Flower', cursive; font-size: 25px; border: 1px solid black; margin-top: 80px; margin-bottom:30px; width: 100px; height: 40px; color: #000000;  border: none;}
 	#button:hover { font-weight: bold; color: black;}
 	.ipt::placeholder { font-family: 'Gamja Flower', cursive; font-size: 25px; color: #000000;}
 	.tpt::placeholder { font-family: 'Gamja Flower', cursive; font-size: 25px; color: #000000;}

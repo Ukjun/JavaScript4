@@ -16,18 +16,21 @@
 <style>
 	body{background: #F0FFF0; font-family: 'Gamja Flower', cursive; font-size: 25px}
 	#right {display: flex; justify-content:flex-end; margin-top:50px; margin-bottom: 50px;}
-	#container{ width:1000px; height: 100%; margin: 0 auto;}
-	#cont_txt { padding: 10px; height: 500px; vertical-align: top;}
+	#container{ width:500px; height: 100%; margin: 0 auto;}
+	#cont_txt { padding: 10px; height: 300px; vertical-align: top;}
 	table { border: 1px solid white; border-collapse : collapse;font-size: 12px;  width: 100%; margin: 0 auto; border: none; background: #C8EE9D; font-size : 20px;}
 	table tr { border: 1px solid #4e4e4e; background: gray; border: none;}
 	table th { border: 1px solid #4e4e4e; background: #9e9e9e;  height: 40px;  font-weight: bold; background: #A9E2C5; color: #000000}
-	table td { border: 1px solid #4e4e4e; height: 40px; width: 150px; ; color: #000000; background: #C8EE9D;}
+	table td { border: 1px solid #4e4e4e; height: 40px; width: 100px; ; color: #000000; background: #C8EE9D;}
 	form { display: inline; }
 	a {  text-decoration: none;  color: #000000; font-weight: bold;}
 	.mar_l {margin: 0px 10px;}
 	.s_td { width: 100px;}
-	.l_td { padding-left: 10px; width: 600px;}
+	.l_td { padding-left: 10px; width: 100px;}
 	.m_td { padding-left: 10px;}
+	.d_td { width: 200px;}
+	.n_td { width: 70px;}
+	.t_td { width: 120px;}
 	.material-icons{color: #000000; cursor: pointer;}
 </style>
 </head>
@@ -46,24 +49,20 @@
 		</div>
 		<table>
 			<tr>
-				<th class="s_td">
-					제목
-				</th>
-				<td class="l_td">
-					${data.title}
-				</td>
-				<th class="s_td">
-					작성자
-				</th>
-				<td class="m_td">
-					${data.nm}
-				</td>
-				<th class="s_td">
-					날짜
-				</th>
-				<td class="m_td">
-					${data.r_dt}
-				</td>
+				<th class="s_td">제목</th>
+				<td class="l_td">${data.title}</td>
+				<th class="s_td">작성자</th>
+				<td class="m_td">${data.nm}</td>
+				<th class="s_td">날짜</th>
+				<td class="d_td">${data.r_dt}</td>
+			</tr>
+			<tr>
+				<th colspan="10">내용</td>
+			</tr>
+			<tr>
+				<td id="cont_txt" colspan="10">${data.ctnt}</td>
+			</tr>
+			<tr>
 				<th class="s_td">
 					조회수
 				</th>
@@ -73,22 +72,44 @@
 				<th class="s_td">
 					좋아요
 				</th>
-				<td class="m_td">
+				<td class="m_td" colspan="6">
 					<c:if test="${data.yn_like ==0}"> <span class="material-icons" onclick="toggleChange(${data.yn_like})">favorite_border</span></c:if>
 					<c:if test="${data.yn_like ==1}"> <span class="material-icons" onclick="toggleChange(${data.yn_like})">favorite</span></c:if>
-				</td>	
-			</tr>
-			<tr>
-				<th colspan="10">내용</td>
-			</tr>
-			<tr>
-				<td id="cont_txt" colspan="10">${data.ctnt}</td>
-			</tr>
-			<tr>
-				<td colspan ="2">좋아요를 누른사람 </td>
-				<td colspan ="8"></td>
+				</td>
 			</tr>			
 		</table>
+		<div>
+			<form  id="cmtFrm" action="/board/cmt" method="post">
+				<input type ="hidden" name="i_cmt" value="0">
+				<input type ="hidden" name="i_board" value="${data.i_board }">
+				<div>
+					<input type="text" name="cmt" placeholder="댓글을 입력하세요">
+					<input type = "submit" value="입력">
+					
+				</div>
+			</form>
+		</div>
+		<div>
+			댓글 리스트
+			<table>
+			<tr>
+				<th>작성자</th>
+				<th>작성 내용</th>
+				<th>작성 일자</th>
+				<th>수정 일자</th>
+			</tr>
+		 	<c:forEach items="${allList}" var="item">
+				<tr class="itemRow">
+					<td class="n_td"><c:out value="${item.nm }"></c:out></td>
+					<td class="n_td"><c:out value="${item.cmt }"></c:out></td>
+					<td class="t_td"><c:out value="${item.r_dt }"></c:out></td>
+					<td class="t_td"><c:out value="${item.m_dt }"></c:out></td>
+					<a href="/board/cmt?i_board=${item.i_board}" class="mar_l">수정</a>
+					<a href="/board/cmt?i_board=${item.i_board}" class="mar_l">삭제</a>
+				</tr>
+			</c:forEach>
+			</table>
+		</div>
 	</div>
 	<script>
 		function submitDel()

@@ -1,6 +1,7 @@
 package com.koreait.pjt.board;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -13,6 +14,7 @@ import javax.servlet.http.HttpSession;
 
 import com.koreait.pjt.MyUtils;
 import com.koreait.pjt.ViewResolver;
+import com.koreait.pjt.db.BoardCmtDAO;
 import com.koreait.pjt.db.BoardDAO;
 import com.koreait.pjt.db.UserDAO;
 import com.koreait.pjt.user.Const;
@@ -55,9 +57,6 @@ public class BoardDetailSer extends HttpServlet {
 		
 		
 		
-		
-		
-		
 		System.out.println("i_board = " + i_board);
 		if(i_board==0) {
 			response.sendRedirect("/board/list");
@@ -67,6 +66,9 @@ public class BoardDetailSer extends HttpServlet {
 			para.setI_user(loginUser.getI_user());
 			BoardDAO.updateCount(para);
 			//int check = BoardDAO.likeCheck(para);
+			List<?> list = BoardCmtDAO.selCmt(i_board);
+			request.setAttribute("allList", list);
+			System.out.println("cmt list size: " + list.size());
 			request.setAttribute("data", BoardDAO.detailBoardList(para));
 			ViewResolver.forwardLoginCheck("board/detail", request, response);
 		}	
