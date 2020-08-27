@@ -11,6 +11,35 @@ import com.koreait.pjt.vo.BoardDomain;
 import com.koreait.pjt.vo.BoardVO;
 
 public class BoardDAO {
+	//페이징 숫자 가져오기 
+	public static int selPagingCnt(final BoardDomain para) {
+		String sql ="select ceil(count(i_board)/?) from t_board4";
+		
+		return JdbcTemplate.executeQuery(sql, new JdbcSelectInterface() {
+			
+			@Override
+			public List<?> selBoard(ResultSet rs) {
+				// TODO Auto-generated method stub
+				return null;
+			}
+			
+			@Override
+			public void prepared(PreparedStatement ps) throws SQLException {
+				ps.setInt(1, para.getRecord_cnt());
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public int executeQuery(ResultSet rs) throws SQLException {
+				// TODO Auto-generated method stub
+				if(rs.next()) {
+					return rs.getInt(1);
+				}
+				return 0;
+			}
+		});
+	}
 	public static List<?> selBoardList(){
 		String sql = "select i_board, title, ctnt, hits, i_user, r_dt "
 				+ "from t_board4 order by i_board desc";

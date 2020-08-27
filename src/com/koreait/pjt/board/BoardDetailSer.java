@@ -57,8 +57,12 @@ public class BoardDetailSer extends HttpServlet {
 		
 		
 		
-		System.out.println("i_board = " + i_board);
+		System.out.println("DetailSer i_board = " + i_board);
+		List<?> list = BoardCmtDAO.selCmt(i_board);
+		request.setAttribute("allList", list);
+		System.out.println("cmt list size: " + list.size());
 		if(i_board==0) {
+			
 			response.sendRedirect("/board/list");
 			return;
 		}else {
@@ -68,9 +72,7 @@ public class BoardDetailSer extends HttpServlet {
 			
 			
 			//int check = BoardDAO.likeCheck(para);
-			List<?> list = BoardCmtDAO.selCmt(i_board);
-			request.setAttribute("allList", list);
-			System.out.println("cmt list size: " + list.size());
+			
 			
 			
 			request.setAttribute("data", BoardDAO.detailBoardList(para));

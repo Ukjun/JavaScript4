@@ -83,8 +83,9 @@
 				<input type ="hidden" name="i_cmt" value="0">
 				<input type ="hidden" name="i_board" value="${data.i_board }">
 				<div>
-					<input type="text" name="cmt" placeholder="댓글을 입력하세요">
-					<input type = "submit" value="입력">
+					<input type="text" id="cmt" name="cmt" placeholder="댓글을 입력하세요">
+					<input type = "submit" id="cmtSubmit" value="입력">
+					<input type = "button" value = "취소" onclick="clkCmtCancel()">
 				</div>
 			</form>
 		</div>
@@ -102,30 +103,39 @@
 					<td class="n_td"><c:out value="${item.nm } 'kkk'"></c:out></td>
 					<td class="n_td"><c:out value="${item.cmt }"></c:out></td>
 					<td class="t_td"><c:out value="${item.r_dt }"></c:out></td>
+					
 					<td>
 					<c:if test="${LoginUser.i_user == item.i_user}">
 						<%-- <a href="/board/regmod?i_board=${allList.i_board}" class="mar_l">수정</a> --%>
-							<a href="#" onclick="onregCmt()">수정</a>
-							<a href="/board/cmt?i_board=${data.i_board }&i_cmt=${item.i_cmt}" class="mar_l">삭제</a>
-						
+							<a href="#" onclick="clkCmtMod(${item.i_cmt},'${item.cmt }')">수정</a>
+							<a href="#" onclick="clkCmtDel(${item.i_cmt})"class="mar_l">삭제</a>
 					</c:if>
 					</td>
 				</tr>
-				 <tr>
+				 <%-- <tr>
 					<td id="reg_cmt">
 						<form  id="cmtFrm2" action="/board/cmt" method="post">
 							<input type="text"name = "cmt" value=${item.cmt }>
-							<input type ="hidden" name="i_cmt" value="2">
+							<input type ="hidden" name="i_cmt" value="${item.i_cmt }">
+							<input type ="hidden" name="i_board" value="${item.i_board }">
 							<input type = "submit" value="수정">
 						</form>
 					</td>
-				</tr>  
+				</tr>   --%>
 			</c:forEach>
 			</table>
 		</div>
 	</div>
 	<script>
-	
+		console.log(`${data.i_board}`)
+		
+		function clkCmtCancel(){
+			cmtFrm.i_cmt.value = 0;
+			cmtFrm.cmt.value='';
+			cmtSubmit.value ='전송';
+		}
+		
+		
 		function submitDel()
 		{
 			confirm('삭제하시겠습니까?')
@@ -133,10 +143,17 @@
 				frm.submit();
 			}
 		}
-		
-		function onregCmt(){
-			var item = document.getElementById("reg_cmt");
-			item.style.visibility = "visible";
+		function clkCmtDel(i_cmt){
+			if(confirm("Do you want to delete??")){
+				location.href ='/board/cmt?i_board=${data.i_board}&i_cmt='+i_cmt;
+			}
+		}
+		function clkCmtMod(i_cmt,cmt){
+			console.log(i_cmt)	
+			cmtFrm.i_cmt.value = i_cmt;
+			cmtFrm.cmt.value = cmt;
+			
+			cmtSubmit.value ='수정';
 		}
 		
 		function likeCount(){

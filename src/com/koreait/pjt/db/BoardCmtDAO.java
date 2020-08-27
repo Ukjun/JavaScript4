@@ -14,7 +14,7 @@ import com.koreait.pjt.vo.BoardVO;
 public class BoardCmtDAO {
 	public static List<?> selCmt(int i_board){
 //		String sql = "select i_cmt, i_user, i_board, cmt, r_dt from t_board4_cmt where i_board=?";
-		String sql = "select A.i_cmt, B.i_user, A.cmt, A.r_dt, B.nm "
+		String sql = "select A.i_board, A.i_cmt, B.i_user, A.cmt, A.r_dt, B.nm "
 				+ "from t_board4_cmt A "
 				+ "inner join t_user B "
 				+ "on A.i_user=B.i_user "
@@ -29,11 +29,13 @@ public class BoardCmtDAO {
 				try {
 					while(rs.next()) {
 						BoardCmtVODomain vo = new BoardCmtVODomain();
+						vo.setI_board(rs.getInt("i_board"));
 						vo.setI_cmt(rs.getInt("i_cmt"));
 						vo.setI_user(rs.getInt("i_user"));
 						vo.setNm(rs.getNString("nm"));
 						vo.setCmt(rs.getNString("cmt"));
 						vo.setR_dt(rs.getNString("r_dt"));
+						//vo.setM_dt(rs.getNString("m_dt"));
 						list.add(vo);
 					}
 				}catch(Exception e) {
@@ -69,13 +71,14 @@ public class BoardCmtDAO {
 		});
 	}
 	public static void updateCmt(BoardCmtVO para) {
-		String sql ="update t_board4_cmt set cmt=? where i_board=? and i_cmt=? and i_user=?";
+		String sql ="update t_board4_cmt set cmt=?, r_dt=sysdate where i_board=? and i_cmt=? and i_user=?";
 		JdbcTemplate.excuteupdate(sql, new JdbcUpdateInterface() {
 			
 			@Override
 			public void update(Connection conn, PreparedStatement ps) throws SQLException {
 				// TODO Auto-generated method stub
 				ps.setString(1, para.getCmt());
+				//ps.setNString(2, para.getM_dt());
 				ps.setInt(2, para.getI_board());
 				ps.setInt(3, para.getI_cmt());
 				ps.setInt(4, para.getI_user());

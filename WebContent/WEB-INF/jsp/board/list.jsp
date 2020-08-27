@@ -4,7 +4,14 @@
     <%@ page import = "java.util.*" %>
     <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
-<% List<BoardVO> list = (ArrayList)request.getAttribute("data");%>
+<% 
+	List<BoardVO> list = (ArrayList)request.getAttribute("data");
+	final int ROWSIZE = 10;
+	final int BLOCK = 5;
+	
+	
+	
+%>
 <html>
 <link href="https://fonts.googleapis.com/css2?family=Gamja+Flower&family=Nanum+Pen+Script&display=swap" rel="stylesheet">
 <head>
@@ -40,6 +47,9 @@ th:last-child{
             background-color: #BBD1E8;
         }
    }
+   .writemov{
+   text-align: center;}
+   .fontcetner{ text-align: center;}
 </style>
 <meta charset="UTF-8">
 <title>Insert title here</title>
@@ -58,10 +68,7 @@ th:last-child{
 		<th>작 성 자</th>
 		<th>작 성 일 자</th>
 	</tr>
-	<tr>
-	<!-- 주소 이동에서 앞에 /를 붙이지않으면 뒤에 주소로만 가고 붙이면 앞주소기준으로 간다 -->
-		<a href="/board/regmod">글쓰기</a>
-	</tr>
+	
 	<c:choose>
 		<c:when test="${empty data}">
 		<tr>
@@ -70,17 +77,27 @@ th:last-child{
 		</c:when>
 		<c:otherwise>
 		<!-- jstl에서 보낼때는 setAttribute에서 보낸 이름으로 명령해야된다   -->
-			<c:forEach items="${data}" var="item">
-			<tr class="itemRow" onclick="moveToDetail(${item.i_board })">
+		<div class = "fontCenter">
+		<c:forEach var="i" begin="1" end="${pageCnt}" step="1">
+			<span><a href="/board/list?page=${i}">  ${i } </a></span>
+		</c:forEach>
+		</div>
+		<div>
+		<a href="/board/regmod" class='writemov'>글쓰기</a>
+		</div>
+		<c:forEach items="${data}" var="item">
+			<tr class="itemRow" onclick="moveToDetail(${item.i_board })" >
 				<td>${item.i_board }</td>
 				<td>${item.title }</td>
 				<td>${item.ctnt }</td>
 		 		<td>${item.hits }</td>
 				<td>${item.i_user }</td>
 				<td>${item.r_dt }</td>
-				<!-- <td><input type="button" value="좋아요"></td> -->
+		<!-- <td><input type="button" value="좋아요"></td> -->
 			</tr>
-		</c:forEach>
+			</c:forEach>
+			
+			
 	</c:otherwise>
 </c:choose>
 	
@@ -95,6 +112,8 @@ th:last-child{
 	</tr>
 	<%} %> --%>
 	</table>
+	<!-- 주소 이동에서 앞에 /를 붙이지않으면 뒤에 주소로만 가고 붙이면 앞주소기준으로 간다 -->
+	
 </div>
 </body>
 <script>

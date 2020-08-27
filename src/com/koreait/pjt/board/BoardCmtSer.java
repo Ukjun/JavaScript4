@@ -1,6 +1,7 @@
 package com.koreait.pjt.board;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -44,17 +45,17 @@ public class BoardCmtSer extends HttpServlet {
 	//댓글 (등록/수정)
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession hs = request.getSession();
-		String strI_cmt = request.getParameter("i_cmt");
-		int i_cmt = MyUtils.parseStringToInt(strI_cmt, 0);
-		String cmt = request.getParameter("cmt");
-		
-		String strI_board = request.getParameter("i_board");
-		int i_board = MyUtils.parseStringToInt(strI_board, 0);
-		System.out.println("before cmt: " + cmt);
-		System.out.println("before i_cmt: " + i_cmt);
 		UserVO util = (UserVO)hs.getAttribute(Const.LOGIN_USER);
 		
-		System.out.println("information : " + i_board + util.getI_user());
+		int i_cmt = MyUtils.getIntParameter(request, "i_cmt");
+		String cmt = request.getParameter("cmt");
+		
+		int i_board = MyUtils.getIntParameter(request, "i_board");
+		System.out.println("before cmt: " + cmt);
+		System.out.println("before i_cmt: " + i_cmt);
+		
+		Date now = new Date();
+		System.out.println("i_board : " + i_board);
 		
 		vo.setI_cmt(i_cmt);
 		vo.setCmt(cmt);
@@ -62,16 +63,20 @@ public class BoardCmtSer extends HttpServlet {
 		vo.setI_user(util.getI_user());
 		vo.setI_board(i_board);
 		
-		switch(strI_cmt) {
+		switch(i_cmt) {
 		//등록
-		case "0":
+		case 0:
 			System.out.println("errorTest");
 			BoardCmtDAO.insertCmt(vo);
 			break;
 	
 		//수정
-		case "2":
+		default:
+			System.out.println("Update Start");
+			//vo.setM_dt(now.toString());
 			BoardCmtDAO.updateCmt(vo);
+			//쿼리문 실행했을때 무한로딩이 걸린다면 DB에서 commit을 실행할것!!!!!!!!!!!!!!!!!
+			
 			System.out.println("after cmt: " + cmt);
 			System.out.println("after i_cmt: " + i_cmt);
 			break;

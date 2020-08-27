@@ -10,10 +10,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.koreait.pjt.MyUtils;
 import com.koreait.pjt.ViewResolver;
 import com.koreait.pjt.db.BoardDAO;
 import com.koreait.pjt.db.UserDAO;
 import com.koreait.pjt.user.Const;
+import com.koreait.pjt.vo.BoardDomain;
 import com.koreait.pjt.vo.BoardVO;
 import com.koreait.pjt.vo.UserVO;
 
@@ -32,6 +34,19 @@ public class BoardListSer extends HttpServlet {
 		System.out.println(list.size());
 		
 		// 리스트 내용 jsp로 전달해서 출력하기 위함
+		
+		BoardDomain para = new BoardDomain();
+		para.setRecord_cnt(Const.RECORD_CNT);
+		
+		
+		int page = MyUtils.getIntParameter(request, "page");
+		page = page==0?1:page;
+		
+		
+		System.out.println("recordCnt = " + para.getRecord_cnt());
+		System.out.println(BoardDAO.selPagingCnt(para));
+		request.setAttribute("pageCnt", BoardDAO.selPagingCnt(para));
+		
 		
 		request.setAttribute("data", list);
 		ViewResolver.forwardLoginCheck("board/list", request, response);
