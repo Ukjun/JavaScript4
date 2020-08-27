@@ -63,6 +63,28 @@ th:last-child{
 <div id="container">
 	<!-- 로그인하면서 정보를 Const에 저장시켜놨음 -->
 	<div class="first">${LoginUser.nm }님 환영합니다! <a href="/logout">로그아웃</a></div>
+	<div>
+	${para.page == null ? 1 : para.page }
+	<form id="selFrm" action = "/board/list">
+		<input type="hidden" name = "page" value="${para.page == null ? 1 : para.page }">
+		레코드 수 : 
+		<select name = "record_cnt" onchange="changeRecordCnt()">
+		<c:forEach begin="10" end="50" step="10" var="item">
+			<c:choose>
+				<c:when test="${para.record_cnt ==item || (para.record_cnt == null && item ==10)}">
+					<option value="${item }" selected>${item }개</option>
+				</c:when>
+			</c:choose>
+			<c:otherwise>
+				<option value="${item }">${item }개</option>
+			</c:otherwise>
+				
+			
+		</c:forEach>
+		</select>
+	</form>
+		
+	</div>
 	<h1>List</h1>
 	<table id="tableCon">
 	<tr>
@@ -141,6 +163,10 @@ th:last-child{
 function moveToDetail(i_board){
 	console.log('moveToDetailSer - i_board:'+i_board)
 	location.href ="/board/detail?i_board="+i_board;
+}
+
+function changeRecordCnt(){
+	selFrm.submit();
 }
 </script>
 </html>
