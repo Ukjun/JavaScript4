@@ -41,14 +41,17 @@ public class BoardListSer extends HttpServlet {
 		
 		int page = MyUtils.getIntParameter(request, "page");
 		page = page==0?1:page;
+		request.setAttribute("checkpage", page);
 		
 		
+		para.setRecord_cnt(Const.RECORD_CNT);
 		System.out.println("recordCnt = " + para.getRecord_cnt());
 		System.out.println(BoardDAO.selPagingCnt(para));
 		request.setAttribute("pageCnt", BoardDAO.selPagingCnt(para));
+		request.setAttribute("data", BoardDAO.selBoardList_page(page, Const.RECORD_CNT));
 		
 		
-		request.setAttribute("data", list);
+		//request.setAttribute("data", list);
 		ViewResolver.forwardLoginCheck("board/list", request, response);
 	}
 

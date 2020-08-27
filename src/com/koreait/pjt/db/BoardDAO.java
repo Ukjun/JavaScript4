@@ -7,12 +7,13 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.koreait.pjt.user.Const;
 import com.koreait.pjt.vo.BoardDomain;
 import com.koreait.pjt.vo.BoardVO;
 
 public class BoardDAO {
 	//페이징 숫자 가져오기 
-	public static int selPagingCnt(final BoardDomain para) {
+	public static int selPagingCnt(final BoardDomain para ) {
 		String sql ="select ceil(count(i_board)/?) from t_board4";
 		
 		return JdbcTemplate.executeQuery(sql, new JdbcSelectInterface() {
@@ -40,9 +41,66 @@ public class BoardDAO {
 			}
 		});
 	}
+	public static List<?> selBoardList_page(int page, int limitpage){
+		String sql = "select A.* from( " + 
+				"    select rownum as rnum, A.* from( " + 
+				"    select A.i_board, A.title, A.ctnt, A.hits, A.i_user, A.r_dt, B.nm " + 
+				"    from t_board4 A " + 
+				"    inner join t_user B " + 
+				"    on A.i_user = B.i_user " + 
+				"    order by i_board desc " + 
+				"    )A " + 
+				"    where rownum<=? " + 
+				"	)A " + 
+				"	where A.rnum >=? ";
+		final List<BoardVO> list = new ArrayList();
+		return JdbcTemplate.executeQueryList(sql, new JdbcSelectInterface() {
+			
+			@Override
+			public List<?> selBoard(ResultSet rs) {
+				// TODO Auto-generated method stub
+				try {
+					while(rs.next()) {
+						BoardDomain vo = new BoardDomain();
+						
+						vo.setI_board(rs.getInt("i_board"));
+						vo.setTitle(rs.getNString("title"));
+						vo.setCtnt(rs.getNString("ctnt"));
+						vo.setHits(rs.getInt("hits"));
+						vo.setI_user(rs.getInt("i_user"));
+						vo.setR_dt(rs.getNString("r_dt"));
+						vo.setNm(rs.getNString("nm"));
+						list.add(vo);
+					}
+				}catch(Exception e) {
+					e.printStackTrace();
+				}
+				return list;
+			}
+			
+			@Override
+			public void prepared(PreparedStatement ps) throws SQLException {
+				// TODO Auto-generated method stub
+				int endpage = page*limitpage;
+				ps.setInt(1, endpage);
+				ps.setInt(2, endpage-limitpage+1);
+			}
+			
+			@Override
+			public int executeQuery(ResultSet rs) throws SQLException {
+				// TODO Auto-generated method stub
+				return 0;
+			}
+		});
+		
+	}
 	public static List<?> selBoardList(){
-		String sql = "select i_board, title, ctnt, hits, i_user, r_dt "
-				+ "from t_board4 order by i_board desc";
+		String sql = "  select A.i_board, A.title, A.ctnt, A.hits, A.i_user, A.r_dt, B.nm " + 
+				"    from t_board4 A " + 
+				"    inner join t_user B " + 
+				"    on A.i_user = B.i_user "; 
+//		String sql = "select i_board, title, ctnt, hits, i_user, r_dt "
+//				+ "from t_board4 order by i_board desc";
 //		String sql = "select A.i_board, A.title, A.ctnt, A.hits, B.user_id, A.r_dt "
 //				+ "from t_board4 A inner join t_user B"
 //				+ "on A.i_user=B.i_user"
@@ -53,7 +111,6 @@ public class BoardDAO {
 			@Override
 			public void prepared(PreparedStatement ps) throws SQLException {
 				// TODO Auto-generated method stub
-				
 			}
 
 			@Override
@@ -68,15 +125,15 @@ public class BoardDAO {
 				
 				try {
 					while(rs.next()) {
-						BoardVO vo = new BoardVO();
+						BoardDomain vo = new BoardDomain();
 						
 						vo.setI_board(rs.getInt("i_board"));
 						vo.setTitle(rs.getNString("title"));
 						vo.setCtnt(rs.getNString("ctnt"));
 						vo.setHits(rs.getInt("hits"));
 						vo.setI_user(rs.getInt("i_user"));
-						
 						vo.setR_dt(rs.getNString("r_dt"));
+						vo.setNm(rs.getNString("nm"));
 						list.add(vo);
 					}
 				}catch(Exception e) {

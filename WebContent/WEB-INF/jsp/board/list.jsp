@@ -24,6 +24,7 @@
 h1{line-height: 100px; font-size: 50px;}
 table{margin: 0px auto; border-collapse: collapse;}
 td tr{border:1px dotted black;}
+
 td{
 	width:130px;
 	text-align: center;
@@ -49,7 +50,11 @@ th:last-child{
    }
    .writemov{
    text-align: center;}
-   .fontcetner{ text-align: center;}
+   .fontCenter{ text-align: center;}
+   .pagecnt{color: #FC9EBD;}
+   a{text-decoration: none; color: black;
+   }
+	.pagecntnot{font-weight: bold;}
 </style>
 <meta charset="UTF-8">
 <title>Insert title here</title>
@@ -78,8 +83,24 @@ th:last-child{
 		<c:otherwise>
 		<!-- jstl에서 보낼때는 setAttribute에서 보낸 이름으로 명령해야된다   -->
 		<div class = "fontCenter">
-		<c:forEach var="i" begin="1" end="${pageCnt}" step="1">
-			<span><a href="/board/list?page=${i}">  ${i } </a></span>
+		
+		<c:forEach var="item" begin="1" end="${pageCnt}" step="1">
+			<%-- <span><a href="/board/list?page=${i}-1">이전</a></span> --%>
+			<%-- <c:choose>
+				<c:when test="${para.page == item }">
+					<span class="pagecnt pagecntnot" >${item }</span>
+				</c:when>
+				<c:otherwise>
+					<span class="pagecntnot"><a href="/board/list?page=${item}">${item} </a></span>
+				</c:otherwise>
+			</c:choose> --%>
+			 <c:if test="${item ==checkpage}">
+				<span><a href="/board/list?page=${item}" class="pagecnt">  ${item } </a></span>	
+			</c:if>
+			<c:if test="${item !=checkpage}">
+				<span><a href="/board/list?page=${item}"> ${item }    </a></span>	
+			</c:if>
+				
 		</c:forEach>
 		</div>
 		<div>
