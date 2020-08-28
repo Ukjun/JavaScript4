@@ -32,8 +32,6 @@ public class BoardListSer extends HttpServlet {
 		String searchText = request.getParameter("search");
 		searchText = (searchText == null ? "":searchText);
 		
-		// 리스트 내용 jsp로 전달해서 출력하기 위함
-		
 		BoardDomain para = new BoardDomain();
 		
 		

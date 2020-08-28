@@ -112,5 +112,39 @@ public class UserDAO {
 			
 		});
 	}
-	
+	public static UserVO selUser(int i_user) {
+		String sql = "select user_id, nm, profile_img, r_dt, email "
+				+ "from t_user "
+				+ "where i_user=? ";
+		
+		UserVO result = new UserVO();
+		JdbcTemplate.executeQuery(sql, new JdbcSelectInterface() {
+			
+			@Override
+			public List<?> selBoard(ResultSet rs) {
+				// TODO Auto-generated method stub
+				return null;
+			}
+			
+			@Override
+			public void prepared(PreparedStatement ps) throws SQLException {
+				// TODO Auto-generated method stub
+				ps.setInt(1,i_user);
+			}
+			
+			@Override
+			public int executeQuery(ResultSet rs) throws SQLException {
+				// TODO Auto-generated method stub
+				if(rs.next()) {
+					result.setUser_id(rs.getNString("user_id"));
+					result.setNm(rs.getNString("nm"));
+					result.setProfile_img(rs.getNString("profile_img"));
+					result.setR_dt(rs.getNString("r_dt"));
+					result.setEmail(rs.getNString("email"));
+				}
+				return 1;
+			}
+		});
+		return result;
+	}
 }

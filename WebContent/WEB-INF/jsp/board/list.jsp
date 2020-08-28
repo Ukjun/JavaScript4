@@ -73,6 +73,7 @@ th:last-child{
 <div id="container">
 	<!-- 로그인하면서 정보를 Const에 저장시켜놨음 -->
 	<div class="first">${LoginUser.nm }님 환영합니다! <a href="/logout">로그아웃</a></div>
+	<a href = "/profile">프로필</a>
 	<div>
 	<form id="selFrm" action ="/board/list" method="get">
 		<input type="hidden" name ="page" value="1">

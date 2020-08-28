@@ -166,10 +166,10 @@
 			if(yn_like==0){
 				alert("좋아요을 누르셨습니다.")
 				//쿼리스트링 = 키값 + value 값
-				location.href= "/board/toggle?i_board=${data.i_board}&nm=${data.nm}&yn_like="+yn_like;
+				location.href= "/board/toggle?page=${page}&record_cnt=${param.record_cnt}&search=${param.search}&i_board=${data.i_board}&nm=${data.nm}&yn_like="+yn_like;
 			}else if(yn_like==1){
 				alert("좋아요를 취소하셨습니다.")
-				location.href= "/board/toggle?i_board=${data.i_board}&nm=${data.nm}&yn_like="+yn_like;
+				location.href= "/board/toggle?page=${page}&record_cnt=${param.record_cnt}&search=${param.search}&i_board=${data.i_board}&nm=${data.nm}&yn_like="+yn_like;
 			}
 			
 		}

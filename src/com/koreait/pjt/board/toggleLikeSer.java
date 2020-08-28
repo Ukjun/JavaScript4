@@ -28,6 +28,16 @@ public class toggleLikeSer extends HttpServlet {
 		int yn_like = MyUtils.parseStringToInt(strYn_like, 0);
 		
 		
+		//테스트
+		String searchText = request.getParameter("search");
+		String page = request.getParameter("page");
+		String record_cnt = request.getParameter("record_cnt");
+		
+		System.out.println("page= " + page);
+		System.out.println("searchText= " + searchText);
+		System.out.println("recordCnt= " + record_cnt);
+		//
+		
 		UserVO loginUser = MyUtils.getLoginUser(request);
 		System.out.println("yn_like = " + yn_like);
 		
@@ -43,7 +53,9 @@ public class toggleLikeSer extends HttpServlet {
 		}else {
 			BoardDAO.toggleInsert(para);
 		}
-		response.sendRedirect("/board/detail?i_board="+i_board);
+		String target = String.format("/board/detail?&page=%s&record_cnt=%s&search=%si_board=%s"
+				, strI_board, page, record_cnt, searchText);
+		response.sendRedirect(target);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
