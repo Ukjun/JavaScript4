@@ -26,29 +26,59 @@ public class BoardListSer extends HttpServlet {
        
     
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// 리스트 목록 받아오기 
 		
+		HttpSession hs = (HttpSession)request.getSession();
 		
-		List<?> list = BoardDAO.selBoardList();
-		// 리스트 크기 출력 
-		System.out.println(list.size());
+		String searchText = request.getParameter("search");
+		searchText = (searchText == null ? "":searchText);
 		
 		// 리스트 내용 jsp로 전달해서 출력하기 위함
 		
 		BoardDomain para = new BoardDomain();
-		para.setRecord_cnt(Const.RECORD_CNT);
 		
 		
 		int page = MyUtils.getIntParameter(request, "page");
-		page = page==0?1:page;
-		request.setAttribute("checkpage", page);
+		page = (page == 0 ? 1 : page);
+		
+		int recordCnt = MyUtils.getIntParameter(request, "record_cnt");
+		System.out.println("recordCnt : " + recordCnt);
+		recordCnt = (recordCnt == 0 ? 3 : recordCnt);
+		
+				
+		
+		para.setRecord_cnt(recordCnt);
+		para.setSearchText("%"+searchText+"%");
+		int pageCnt = BoardDAO.selPagingCnt(para);
+		System.out.println("pageCnt : " + pageCnt);
+		if(page>pageCnt) {
+			page = pageCnt;
+		}
+		
+//		Integer beforeRecordCnt = (Integer)hs.getAttribute("recordCnt");
+//		
+//		if(beforeRecordCnt !=null && beforeRecordCnt < recordCnt) {
+//			page = pageCnt;
+//		}
+		request.setAttribute("page", page);
+		
+		System.out.println("page : " + page);
+		
+//		request.setAttribute("checkpage", page);
+		int eIdx = page * recordCnt;
+		int sIdx = eIdx - recordCnt;
 		
 		
-		para.setRecord_cnt(Const.RECORD_CNT);
-		System.out.println("recordCnt = " + para.getRecord_cnt());
+		para.seteIdx(eIdx);
+		para.setsIdx(sIdx);
+		
+		
+		System.out.println("eIdx = " + eIdx);
+		System.out.println("sIdx = " + sIdx);
+		
 		System.out.println(BoardDAO.selPagingCnt(para));
+		
 		request.setAttribute("pageCnt", BoardDAO.selPagingCnt(para));
-		request.setAttribute("data", BoardDAO.selBoardList_page(page, Const.RECORD_CNT));
+		request.setAttribute("data", BoardDAO.selBoardList(para));
 		
 		
 		//request.setAttribute("data", list);

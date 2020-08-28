@@ -56,6 +56,14 @@ public class BoardDetailSer extends HttpServlet {
 //		ViewResolver.forwardLoginCheck("board/detail", request, response);
 		
 		
+//		int page = MyUtils.getIntParameter(request, "page");
+//		page = (page == 0 ? 1 : page);
+//		
+//		int recordCnt = MyUtils.getIntParameter(request, "record_cnt");
+//		System.out.println("recordCnt : " + recordCnt);
+//		recordCnt = (recordCnt == 0 ? 3 : recordCnt);
+//		request.setAttribute("page", page);
+		
 		
 		System.out.println("DetailSer i_board = " + i_board);
 		List<?> list = BoardCmtDAO.selCmt(i_board);

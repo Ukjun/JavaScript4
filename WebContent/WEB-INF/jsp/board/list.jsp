@@ -50,11 +50,21 @@ th:last-child{
    }
    .writemov{
    text-align: center;}
-   .fontCenter{ text-align: center;}
-   .pagecnt{color: #FC9EBD;}
-   a{text-decoration: none; color: black;
-   }
+   .fontCenter { text-align: center; }
+	.pageSelected { color:red; font-weight: bold; }
+	a {
+		text-decoration: none;
+		color:black;
+	}
+	.pagingFont {
+		font-size: 1.3em;
+	}
+	
+	.pagingFont:not(:first-child) {
+		margin-left: 13px;
+	}
 	.pagecntnot{font-weight: bold;}
+	.searchtxt{text-align: center;}
 </style>
 <meta charset="UTF-8">
 <title>Insert title here</title>
@@ -64,21 +74,20 @@ th:last-child{
 	<!-- 로그인하면서 정보를 Const에 저장시켜놨음 -->
 	<div class="first">${LoginUser.nm }님 환영합니다! <a href="/logout">로그아웃</a></div>
 	<div>
-	${para.page == null ? 1 : para.page }
-	<form id="selFrm" action = "/board/list">
-		<input type="hidden" name = "page" value="${para.page == null ? 1 : para.page }">
+	<form id="selFrm" action ="/board/list" method="get">
+		<input type="hidden" name ="page" value="1">
+		<input type="hidden" name ="search" value="${param.search }">
 		레코드 수 : 
-		<select name = "record_cnt" onchange="changeRecordCnt()">
-		<c:forEach begin="10" end="50" step="10" var="item">
+		<select name="record_cnt" onchange="changeRecordCnt()">
+		<c:forEach begin="3" end="15" step="3" var="item">
 			<c:choose>
-				<c:when test="${para.record_cnt ==item || (para.record_cnt == null && item ==10)}">
-					<option value="${item }" selected>${item }개</option>
+				<c:when test="${param.record_cnt ==item}">
+					<option value="${item}" selected>${item}개</option>
 				</c:when>
-			</c:choose>
 			<c:otherwise>
-				<option value="${item }">${item }개</option>
+				<option value="${item}">${item }개</option>
 			</c:otherwise>
-				
+		</c:choose>
 			
 		</c:forEach>
 		</select>
@@ -104,30 +113,33 @@ th:last-child{
 		</c:when>
 		<c:otherwise>
 		<!-- jstl에서 보낼때는 setAttribute에서 보낸 이름으로 명령해야된다   -->
-		<div class = "fontCenter">
+		<div class="fontCenter">
+			<c:forEach begin="1" end="${pageCnt}" var="item">
+				<c:choose>
+					<c:when test="${page == item }">
+						<span class="pagingFont pageSelected">${item}</span>
+					</c:when>
+					<c:otherwise>
+						<span class="pagingFont">
+							<a href="/board/list?page=${item}&record_cnt=${param.record_cnt==null ? 3 : param.record_cnt}
+							&search=${param.search}">${item}</a>
+						</span>
+					</c:otherwise>
+				</c:choose>
+			</c:forEach>
+		</div>
 		
-		<c:forEach var="item" begin="1" end="${pageCnt}" step="1">
-			<%-- <span><a href="/board/list?page=${i}-1">이전</a></span> --%>
-			<%-- <c:choose>
-				<c:when test="${para.page == item }">
-					<span class="pagecnt pagecntnot" >${item }</span>
-				</c:when>
-				<c:otherwise>
-					<span class="pagecntnot"><a href="/board/list?page=${item}">${item} </a></span>
-				</c:otherwise>
-			</c:choose> --%>
-			 <c:if test="${item ==checkpage}">
-				<span><a href="/board/list?page=${item}" class="pagecnt">  ${item } </a></span>	
-			</c:if>
-			<c:if test="${item !=checkpage}">
-				<span><a href="/board/list?page=${item}"> ${item }    </a></span>	
-			</c:if>
-				
-		</c:forEach>
-		</div>
 		<div>
-		<a href="/board/regmod" class='writemov'>글쓰기</a>
+		<a href="/board/regmod" class='writemov'>글쓰기</a>                    
 		</div>
+		
+		<form id="serFrm" action="/board/list">
+			<div class = "searchtxt">
+				<input type="search" name="search">
+				<input type="submit" name="serTransmit" value="검색">
+			</div>
+		</form>
+		
 		<c:forEach items="${data}" var="item">
 			<tr class="itemRow" onclick="moveToDetail(${item.i_board })" >
 				<td>${item.i_board }</td>
@@ -139,8 +151,6 @@ th:last-child{
 		<!-- <td><input type="button" value="좋아요"></td> -->
 			</tr>
 			</c:forEach>
-			
-			
 	</c:otherwise>
 </c:choose>
 	
@@ -160,9 +170,10 @@ th:last-child{
 </div>
 </body>
 <script>
+
 function moveToDetail(i_board){
 	console.log('moveToDetailSer - i_board:'+i_board)
-	location.href ="/board/detail?i_board="+i_board;
+	location.href ="/board/detail?page=${page}&record_cnt=${param.record_cnt}&search=${param.search}&i_board="+i_board+"";
 }
 
 function changeRecordCnt(){

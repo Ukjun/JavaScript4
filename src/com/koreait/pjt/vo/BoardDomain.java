@@ -4,7 +4,28 @@ public class BoardDomain extends BoardVO{
 	private String nm;
 	private int yn_like;
 	private int record_cnt;//페이지당 나오는 레코드 수(글 수)
+	private int eIdx;
+	private int sIdx;
+	private String searchText;
 	
+	public String getSearchText() {
+		return searchText;
+	}
+	public void setSearchText(String searchText) {
+		this.searchText = searchText;
+	}
+	public int geteIdx() {
+		return eIdx;
+	}
+	public void seteIdx(int eIdx) {
+		this.eIdx = eIdx;
+	}
+	public int getsIdx() {
+		return sIdx;
+	}
+	public void setsIdx(int sIdx) {
+		this.sIdx = sIdx;
+	}
 	public int getRecord_cnt() {
 		return record_cnt;
 	}

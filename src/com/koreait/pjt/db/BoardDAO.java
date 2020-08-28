@@ -12,9 +12,43 @@ import com.koreait.pjt.vo.BoardDomain;
 import com.koreait.pjt.vo.BoardVO;
 
 public class BoardDAO {
+	public List<BoardDomain> searchList(){
+		List<BoardDomain> list = new ArrayList();
+		String sql ="select * from t_board4 where ctnt like=?";
+		JdbcTemplate.executeQueryList(sql, new JdbcSelectInterface() {
+			
+			@Override
+			public List<?> selBoard(ResultSet rs) {
+				// TODO Auto-generated method stub
+				return null;
+			}
+			
+			@Override
+			public void prepared(PreparedStatement ps) throws SQLException {
+				// TODO Auto-generated method stub
+				//ps.setNString(1, value);
+			}
+			
+			@Override
+			public int executeQuery(ResultSet rs) throws SQLException {
+				// TODO Auto-generated method stub
+				return 0;
+			}
+		});
+		return list;
+	}
+	
+	
+	private void executeQueryList(String sql, JdbcSelectInterface jdbcSelectInterface) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
 	//페이징 숫자 가져오기 
 	public static int selPagingCnt(final BoardDomain para ) {
-		String sql ="select ceil(count(i_board)/?) from t_board4";
+		String sql ="select ceil(count(i_board)/?) from t_board4 "
+				+ "where title like '%' ||? || '%'";
 		
 		return JdbcTemplate.executeQuery(sql, new JdbcSelectInterface() {
 			
@@ -27,6 +61,7 @@ public class BoardDAO {
 			@Override
 			public void prepared(PreparedStatement ps) throws SQLException {
 				ps.setInt(1, para.getRecord_cnt());
+				ps.setNString(2, para.getSearchText());
 				// TODO Auto-generated method stub
 				
 			}
@@ -41,13 +76,14 @@ public class BoardDAO {
 			}
 		});
 	}
-	public static List<?> selBoardList_page(int page, int limitpage){
+	public static List<?> selBoardList_page(int page, int recordCnt){
 		String sql = "select A.* from( " + 
 				"    select rownum as rnum, A.* from( " + 
 				"    select A.i_board, A.title, A.ctnt, A.hits, A.i_user, A.r_dt, B.nm " + 
 				"    from t_board4 A " + 
 				"    inner join t_user B " + 
-				"    on A.i_user = B.i_user " + 
+				"    on A.i_user = B.i_user " +
+				"	 where A.title like ? "	+
 				"    order by i_board desc " + 
 				"    )A " + 
 				"    where rownum<=? " + 
@@ -81,9 +117,10 @@ public class BoardDAO {
 			@Override
 			public void prepared(PreparedStatement ps) throws SQLException {
 				// TODO Auto-generated method stub
-				int endpage = page*limitpage;
-				ps.setInt(1, endpage);
-				ps.setInt(2, endpage-limitpage+1);
+				int eIdx = page*recordCnt;
+				int sIdx = eIdx-recordCnt;
+				ps.setInt(1, eIdx+1);
+				ps.setInt(2, sIdx);
 			}
 			
 			@Override
@@ -93,6 +130,63 @@ public class BoardDAO {
 			}
 		});
 		
+	}
+	public static List<BoardDomain> selBoardList(BoardDomain param) {
+		List<BoardDomain> list = new ArrayList();
+		/*
+		String sql = " SELECT A.i_board, A.title, A.hits, A.i_user, A.r_dt, B.nm "
+				+ " FROM t_board4 A INNER JOIN t_user B ON A.i_user = B.i_user "
+				+ " ORDER BY i_board DESC ";
+		*/
+		String sql = " SELECT A.* FROM ( "
+				+ " SELECT ROWNUM as RNUM, A.* FROM ( "
+				+ " SELECT A.i_board, A.title, A.hits, A.i_user, A.r_dt, B.nm "
+				+ " FROM t_board4 A INNER JOIN t_user B ON A.i_user = B.i_user "
+				+ "	where A.title like ? "
+				+ " ORDER BY i_board DESC "
+				+ " ) A WHERE ROWNUM <= ? "
+				+ " ) A WHERE A.RNUM > ? ";
+		
+		int result = JdbcTemplate.executeQuery(sql, new JdbcSelectInterface() {
+
+			@Override
+			public void prepared(PreparedStatement ps) throws SQLException {
+				ps.setNString(1, param.getSearchText());
+				ps.setInt(2, param.geteIdx());
+				ps.setInt(3, param.getsIdx());
+			}
+
+			@Override
+			public int executeQuery(ResultSet rs) throws SQLException {
+				while(rs.next()) {
+					int i_board = rs.getInt("i_board");	
+					String title = rs.getNString("title");
+					int hits = rs.getInt("hits");
+					int i_user = rs.getInt("i_user");
+					String r_dt = rs.getNString("r_dt");
+					String nm = rs.getNString("nm");
+					
+					BoardDomain vo = new BoardDomain();
+					vo.setI_board(i_board);
+					vo.setTitle(title);
+					vo.setHits(hits);
+					vo.setI_user(i_user);
+					vo.setR_dt(r_dt);
+					vo.setNm(nm);
+					
+					list.add(vo);
+				}
+				return 1;
+			}
+
+			@Override
+			public List<?> selBoard(ResultSet rs) {
+				// TODO Auto-generated method stub
+				return null;
+			}			
+		});
+		
+		return list;
 	}
 	public static List<?> selBoardList(){
 		String sql = "  select A.i_board, A.title, A.ctnt, A.hits, A.i_user, A.r_dt, B.nm " + 

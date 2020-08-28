@@ -11,7 +11,7 @@ import com.koreait.pjt.vo.UserVO;
 
 public class MyUtils {
 	public static int getIntParameter(HttpServletRequest request, String keyNm) {
-		return parseStringToInt(request.getParameter(keyNm),0);
+		return parseStringToInt(request.getParameter(keyNm));
 	}
 	
 	public static String encryptString(String str) {
@@ -35,6 +35,10 @@ public class MyUtils {
 	      }
 
 	      return sha;
+	}
+	
+	public static int parseStringToInt(String str) {
+		return parseStringToInt(str, 0);
 	}
 	public static int parseStringToInt(String str, int n) {
 		try {
