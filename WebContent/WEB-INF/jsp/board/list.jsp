@@ -174,7 +174,7 @@ th:last-child{
 
 function moveToDetail(i_board){
 	console.log('moveToDetailSer - i_board:'+i_board)
-	location.href ="/board/detail?page=${page}&record_cnt=${param.record_cnt}&search=${param.search}&i_board="+i_board+"";
+	location.href ="/board/detail?page=${page}&record_cnt=${param.record_cnt}&search=${param.search}&i_board="+i_board;
 }
 
 function changeRecordCnt(){

@@ -11,6 +11,7 @@ import com.koreait.pjt.MyUtils;
 import com.koreait.pjt.ViewResolver;
 import com.koreait.pjt.db.UserDAO;
 import com.koreait.pjt.vo.UserVO;
+import com.oreilly.servlet.MultipartRequest;
 
 /**
  * Servlet implementation class ProfileSer

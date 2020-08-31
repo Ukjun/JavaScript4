@@ -44,6 +44,10 @@ public class BoardDelSer extends HttpServlet {
 		String strI_board = request.getParameter("i_board");
 		int i_board = MyUtils.parseStringToInt(strI_board, 0);
 		
+		
+		String searchText = request.getParameter("search");
+		String page = request.getParameter("page");
+		String record_cnt = request.getParameter("record_cnt");
 		 
 		
 		vo.setI_board(i_board);
@@ -51,9 +55,13 @@ public class BoardDelSer extends HttpServlet {
 		int result = BoardDAO.deleteList(vo);
 		System.out.println("delete result: "+ result);
 		if(result ==1) {
-			response.sendRedirect("/board/list");
+			String target = String.format("/board/list?&page=%s&record_cnt=%s&search=%s"
+					, page, record_cnt, searchText);
+			response.sendRedirect(target);
 		}else {
-			response.sendRedirect("/board/detail");
+			String target = String.format("/board/detail?&page=%s&record_cnt=%s&search=%s&i_board=%d"
+					, page, record_cnt, searchText,i_board);
+			response.sendRedirect(target);
 		}
 	}
 

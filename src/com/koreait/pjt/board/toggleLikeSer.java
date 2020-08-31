@@ -53,8 +53,8 @@ public class toggleLikeSer extends HttpServlet {
 		}else {
 			BoardDAO.toggleInsert(para);
 		}
-		String target = String.format("/board/detail?&page=%s&record_cnt=%s&search=%si_board=%s"
-				, strI_board, page, record_cnt, searchText);
+		String target = String.format("/board/detail?&page=%s&record_cnt=%s&search=%s&i_board=%s"
+				, page, record_cnt, searchText,strI_board);
 		response.sendRedirect(target);
 	}
 

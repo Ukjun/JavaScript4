@@ -40,8 +40,8 @@
 		<div id="right">
 			<a href="/board/list?page=${param.page }&record_cnt=${param.record_cnt}&search=${param.search}" class="mar_l">뒤로가기</a>
 			<c:if test="${LoginUser.i_user == data.i_user}">
-				<a href="/board/regmod?i_board=${data.i_board}" class="mar_l">수정</a>
-				<form id="frm" action="/board/delete" method="post">
+				<a href="/board/regmod?page=${param.page }&record_cnt=${param.record_cnt}&search=${param.search}&i_board=${data.i_board}" class="mar_l">수정</a>
+				<form id="frm" action="/board/delete?page=${param.page }&record_cnt=${param.record_cnt}&search=${param.search}" method="post">
 					<input type="hidden" name="i_board" value="${data.i_board}">
 					<a href="#" class="mar_l" onclick="submitDel()">삭제</a>
 				</form>
@@ -79,9 +79,10 @@
 			</tr>			
 		</table>
 		<div>
-			<form  id="cmtFrm" action="/board/cmt" method="post">
+			<form  id="cmtFrm" action="/board/cmt?page=${param.page }&record_cnt=${param.record_cnt}&search=${param.search}" method="post">
 				<input type ="hidden" name="i_cmt" value="0">
 				<input type ="hidden" name="i_board" value="${data.i_board }">
+				
 				<div>
 					<input type="text" id="cmt" name="cmt" placeholder="댓글을 입력하세요">
 					<input type = "submit" id="cmtSubmit" value="입력">
@@ -145,7 +146,7 @@
 		}
 		function clkCmtDel(i_cmt){
 			if(confirm("Do you want to delete??")){
-				location.href ='/board/cmt?i_board=${data.i_board}&i_cmt='+i_cmt;
+				location.href ='/board/cmt?page=${param.page }&record_cnt=${param.record_cnt}&search=${param.search}&i_board=${data.i_board}&i_cmt='+i_cmt;
 			}
 		}
 		function clkCmtMod(i_cmt,cmt){
@@ -166,10 +167,10 @@
 			if(yn_like==0){
 				alert("좋아요을 누르셨습니다.")
 				//쿼리스트링 = 키값 + value 값
-				location.href= "/board/toggle?page=${page}&record_cnt=${param.record_cnt}&search=${param.search}&i_board=${data.i_board}&nm=${data.nm}&yn_like="+yn_like;
+				location.href= "/board/toggle?page=${param.page}&record_cnt=${param.record_cnt}&search=${param.search}&i_board=${data.i_board}&yn_like=" + yn_like;
 			}else if(yn_like==1){
 				alert("좋아요를 취소하셨습니다.")
-				location.href= "/board/toggle?page=${page}&record_cnt=${param.record_cnt}&search=${param.search}&i_board=${data.i_board}&nm=${data.nm}&yn_like="+yn_like;
+				location.href= "/board/toggle?page=${param.page}&record_cnt=${param.record_cnt}&search=${param.search}&i_board=${data.i_board}&yn_like=" + yn_like;
 			}
 			
 		}

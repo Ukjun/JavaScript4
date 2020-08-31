@@ -19,5 +19,6 @@
 	<div>이름 : ${data.nm }</div>
 	<div>이메일 : ${data.email }</div>
 	<div>가입일시 : ${data.r_dt }</div>
+	<div>test : <input type="file" name="uploadfile"></div>
 </body>
 </html>

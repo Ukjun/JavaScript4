@@ -51,6 +51,15 @@ public class BoardCmtSer extends HttpServlet {
 		String cmt = request.getParameter("cmt");
 		
 		int i_board = MyUtils.getIntParameter(request, "i_board");
+		
+		String searchText = request.getParameter("search");
+		String page = request.getParameter("page");
+		String record_cnt = request.getParameter("record_cnt");
+		
+		System.out.println("page: " + page);
+		System.out.println("search: " + searchText);
+		System.out.println("record_cnt: " + record_cnt);
+		
 		System.out.println("before cmt: " + cmt);
 		System.out.println("before i_cmt: " + i_cmt);
 		
@@ -66,7 +75,6 @@ public class BoardCmtSer extends HttpServlet {
 		switch(i_cmt) {
 		//등록
 		case 0:
-			System.out.println("errorTest");
 			BoardCmtDAO.insertCmt(vo);
 			break;
 	
@@ -81,7 +89,9 @@ public class BoardCmtSer extends HttpServlet {
 			System.out.println("after i_cmt: " + i_cmt);
 			break;
 		}
-		response.sendRedirect("/board/detail?i_board="+i_board);
+		String target = String.format("/board/detail?&page=%s&record_cnt=%s&search=%s&i_board=%d"
+				, page, record_cnt, searchText,i_board);
+		response.sendRedirect(target);
 	}
 
 }
