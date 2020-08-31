@@ -147,4 +147,42 @@ public class UserDAO {
 		});
 		return result;
 	}
+	
+	public static int updUser(UserVO param) {
+		// 문자열 관련 메소드 ~.append = 그 문자열 뒤에 문자/문자열을 추가 
+		StringBuilder sb = new StringBuilder("update t_user set m_dt = sysdate");
+		if(param.getUser_pw() != null) {
+			sb.append(" , user_pw = '");
+			sb.append(param.getUser_pw());
+			sb.append("' ");
+		}
+		if(param.getNm() != null) {
+			sb.append(" , nm = '");
+			sb.append(param.getNm());
+			sb.append("' ");
+		}
+		if(param.getEmail() != null) {
+			sb.append(" , email = '");
+			sb.append(param.getEmail());
+			sb.append("' ");
+		}
+		if(param.getProfile_img() != null) {
+			sb.append(" , profile_img = '");
+			sb.append(param.getProfile_img());
+			sb.append("' ");
+		}
+		sb.append(" where i_user= " );
+		sb.append(param.getI_user());
+		
+		System.out.println("sb : " + sb.toString());
+		
+		return JdbcTemplate.excuteupdate(sb.toString(), new JdbcUpdateInterface() {
+			
+			@Override
+			public void update(Connection conn, PreparedStatement ps) throws SQLException {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+	}
 }
