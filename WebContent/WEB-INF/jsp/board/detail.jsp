@@ -16,7 +16,7 @@
 <style>
 	body{background: #F0FFF0; font-family: 'Gamja Flower', cursive; font-size: 25px}
 	#right {display: flex; justify-content:flex-end; margin-top:50px; margin-bottom: 50px;}
-	#container{ width:500px; height: 100%; margin: 0 auto;}
+	#container{ width:700px; height: 100%; margin: 0 auto;}
 	#cont_txt { padding: 10px; height: 300px; vertical-align: top;}
 	table { border: 1px solid white; border-collapse : collapse;font-size: 12px;  width: 100%; margin: 0 auto; border: none; background: #C8EE9D; font-size : 20px;}
 	table tr { border: 1px solid #4e4e4e; background: gray; border: none;}
@@ -27,12 +27,14 @@
 	.mar_l {margin: 0px 10px;}
 	.s_td { width: 100px;}
 	.l_td { padding-left: 10px; width: 100px;}
-	.m_td { padding-left: 10px;}
+	.m_td { padding-left: 10px; width: 150px; }
+	.m2_td{ border-right: hidden; text-align: center; width: 100px;}
 	.d_td { width: 200px;}
 	.n_td { width: 100px;}
 	.t_td { width: 180px;}
 	.material-icons{color: #000000; cursor: pointer;}
 	#reg_cmt { visibility: hidden;}
+	.pImg{width:48px; height: 48px; border-radius: 50%; }
 </style> 
 </head>
 <body>
@@ -52,7 +54,18 @@
 				<th class="s_td">제목</th>
 				<td class="l_td">${data.title}</td>
 				<th class="s_td">작성자</th>
-				<td class="m_td">${data.nm}</td>
+				<td class="m2_td" colspan="2">
+					<c:choose>
+							<c:when test="${data.profile_img != null}" >
+								<img class="pImg" onclick="window.open(this.src)" src="/img/user/${data.i_user }/${data.profile_img}" >
+							</c:when>
+							<c:otherwise>
+								<img class="pImg" onclick="window.open(this.src)" src="/img/default_profile.jpg">
+							</c:otherwise>
+					</c:choose></td>
+				<td class="m_td">
+					${data.nm}
+				</td>
 				<th class="s_td">날짜</th>
 				<td class="d_td">${data.r_dt}</td>
 			</tr>
@@ -94,14 +107,26 @@
 			댓글 리스트
 			<table>
 			<tr>
-				<th>작성자</th>
+				<th colspan="2">작성자</th>
 				<th>작성 내용</th>
 				<th>작성 일자</th>
 				<th>비 고 </th>
 			</tr>
 		 	<c:forEach items="${allList}" var="item">
 				<tr class="itemRow">
-					<td class="n_td"><c:out value="${item.nm } 'kkk'"></c:out></td>
+					<td class="m2_td">
+					<c:choose>
+							<c:when test="${item.profile_img != null}" >
+								<img class="pImg" onclick="window.open(this.src)" src="/img/user/${item.i_user }/${item.profile_img}" >
+							</c:when>
+							<c:otherwise>
+								<img class="pImg" onclick="window.open(this.src)" src="/img/default_profile.jpg">
+							</c:otherwise>
+					</c:choose>
+					</td>
+					<td class="s_td">
+					${item.nm }
+					</td>
 					<td class="n_td"><c:out value="${item.cmt }"></c:out></td>
 					<td class="t_td"><c:out value="${item.r_dt }"></c:out></td>
 					

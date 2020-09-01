@@ -14,7 +14,7 @@ import com.koreait.pjt.vo.BoardVO;
 public class BoardCmtDAO {
 	public static List<?> selCmt(int i_board){
 //		String sql = "select i_cmt, i_user, i_board, cmt, r_dt from t_board4_cmt where i_board=?";
-		String sql = "select A.i_board, A.i_cmt, B.i_user, A.cmt, A.r_dt, B.nm "
+		String sql = "select A.i_board, A.i_cmt, B.i_user, A.cmt, A.r_dt, B.nm, B.profile_img "
 				+ "from t_board4_cmt A "
 				+ "inner join t_user B "
 				+ "on A.i_user=B.i_user "
@@ -35,6 +35,7 @@ public class BoardCmtDAO {
 						vo.setNm(rs.getNString("nm"));
 						vo.setCmt(rs.getNString("cmt"));
 						vo.setR_dt(rs.getNString("r_dt"));
+						vo.setProfile_img(rs.getNString("profile_img"));
 						//vo.setM_dt(rs.getNString("m_dt"));
 						list.add(vo);
 					}

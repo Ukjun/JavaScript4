@@ -249,7 +249,7 @@ public class BoardDAO {
 //				+ "on A.i_user = B.i_user "
 //				+ "where i_board=?";
 		String sql = "select A.i_board, A.title, A.ctnt, A.hits, A.i_user, "
-				+ "A.r_dt, B.nm, decode(C.i_user,null,0,1) as yn_like "
+				+ "A.r_dt, B.nm, B.profile_img, decode(C.i_user,null,0,1) as yn_like "
 				+ "from t_board4 A inner join t_user B "
 				+ "on A.i_user = B.i_user "
 				+ "left join t_board4_like C "
@@ -277,6 +277,7 @@ public class BoardDAO {
 					vo.setR_dt(rs.getNString("r_dt"));
 					vo.setNm(rs.getNString("nm"));
 					vo.setYn_like(rs.getInt("yn_like"));
+					vo.setProfile_img(rs.getNString("profile_img"));
 					return 1;
 				}else
 					return 2;

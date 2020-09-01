@@ -65,7 +65,8 @@ th:last-child{
 	}
 	.pagecntnot{font-weight: bold;}
 	.searchtxt{text-align: center;}
-	img{width:48px; height: 48px; border-radius: 50%;}
+	.pImg{width:48px; height: 48px; border-radius: 50%; }
+	.containerpImg {display:inline-block; overflow : hidden;}
 </style>
 <meta charset="UTF-8">
 <title>Insert title here</title>
@@ -103,7 +104,7 @@ th:last-child{
 		<th>제 목</th>
 		<th>내 용</th>
 		<th>조 회 수</th>
-		<th>작 성 자</th>
+		<th colspan="2">작 성 자</th>
 		<th>작 성 일 자</th>
 	</tr>
 	
@@ -149,16 +150,18 @@ th:last-child{
 				<td>${item.ctnt }</td>
 		 		<td>${item.hits }</td>
 				<td>
-					<c:choose>
-						<c:when test="${item.profile_img != null}" >
-							<img src="/img/user/${item.i_user }/${item.profile_img}" >
-						</c:when>
-					<c:otherwise>
-							<img src="/img/default_profile.jpg">
-					</c:otherwise>
-					</c:choose>
-					${item.nm }
-				</td>
+					<div class="containerpImg">
+						<c:choose>
+							<c:when test="${item.profile_img != null}" >
+								<img class="pImg" onclick="window.open(this.src)" src="/img/user/${item.i_user }/${item.profile_img}" >
+							</c:when>
+							<c:otherwise>
+								<img class="pImg" onclick="window.open(this.src)" src="/img/default_profile.jpg">
+							</c:otherwise>
+						</c:choose>
+					</div>
+					</td>
+				<td>${item.nm }</td>
 				<td>${item.r_dt }</td>
 		<!-- <td><input type="button" value="좋아요"></td> -->
 			</tr>
