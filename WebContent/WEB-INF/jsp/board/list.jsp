@@ -65,6 +65,7 @@ th:last-child{
 	}
 	.pagecntnot{font-weight: bold;}
 	.searchtxt{text-align: center;}
+	img{width:48px; height: 48px; border-radius: 50%;}
 </style>
 <meta charset="UTF-8">
 <title>Insert title here</title>
@@ -147,7 +148,17 @@ th:last-child{
 				<td>${item.title }</td>
 				<td>${item.ctnt }</td>
 		 		<td>${item.hits }</td>
-				<td>${item.i_user }</td>
+				<td>
+					<c:choose>
+						<c:when test="${item.profile_img != null}" >
+							<img src="/img/user/${item.i_user }/${item.profile_img}" >
+						</c:when>
+					<c:otherwise>
+							<img src="/img/default_profile.jpg">
+					</c:otherwise>
+					</c:choose>
+					${item.nm }
+				</td>
 				<td>${item.r_dt }</td>
 		<!-- <td><input type="button" value="좋아요"></td> -->
 			</tr>

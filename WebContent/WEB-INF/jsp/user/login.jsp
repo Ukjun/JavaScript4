@@ -24,9 +24,9 @@
 	<form id="frm" action="/login" method="post">
 		<%-- <div><input type="text" name="user_id" id="user_id" placeholder="아이디" required value = "${data.user_id }"></div> --%>
 		<div><input type="text" name="user_id" id="user_id" placeholder="아이디" required value = "Ukjun"></div>
-		<div><input type="text" name="user_pw" id="user_pw" placeholder="비밀번호" required value = "2222222"></div>
+		<div><input type="password" name="user_pw" id="user_pw" placeholder="비밀번호" value = "2222222"></div>
 		<div><input type="submit" id="button" value="로그인" onclick="check()"></div>
-		<div><input type="submit" id="button" value="회원가입" onclick="move()"></div>
+		<div><input type="button" id="button" value="회원가입" onclick="move()"></div>
 	</form>
 	</div>
 	<script>
@@ -39,7 +39,7 @@
 		}
 		function move(){
 			alert('회원가입 창으로 이동합니다');
-			location.href="/join"
+			location.href ="/join";
 		}
 	</script>
 </body>

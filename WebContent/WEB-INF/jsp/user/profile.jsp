@@ -39,6 +39,7 @@ img{width:96px; height: 96px; border-radius: 50%;}
 	<div>이름 : ${data.nm }</div>
 	<div>이메일 : ${data.email }</div>
 	<div>가입일시 : ${data.r_dt }</div>
+	<div><a href= "/board/list">뒤로가기</a></div>
 	
 </body>
 </html>

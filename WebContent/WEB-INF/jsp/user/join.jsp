@@ -22,7 +22,7 @@
 		<h1>회원 가입</h1>
 		
 		<hr>
-		<form id="frm" action="/JoinSer" method="post" onsubmit="return chk()">
+		<form id="frm" action="/join" method="post" onsubmit="return chk()">
 			<div><input type="text" name="user_id" id="user_id"placeholder=" 아이디" required value = "${data.user_id }"></div>
 			<div><input type="password" name="user_pw" placeholder=" 비밀번호" required ></div>
 			<div><input type="password" name="user_pwre" placeholder=" 비밀번호 확인" required></div>

@@ -23,7 +23,8 @@ public class LoginSer extends HttpServlet {
        
     
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		if(!MyUtils.isLogout(request)) {
+		UserVO LoginUser = MyUtils.getLoginUser(request);
+		if(LoginUser != null) {
 			response.sendRedirect("/board/list");
 			return;
 		}
@@ -35,34 +36,17 @@ public class LoginSer extends HttpServlet {
 		String user_id = request.getParameter("user_id");
 		String user_pw = request.getParameter("user_pw");
 		String encrypt_pw = MyUtils.encryptString(user_pw);
+		
+		
 		UserVO user = new UserVO();
 		user.setUser_id(user_id);
 		user.setUser_pw(encrypt_pw);
+		
+		
 		String msg = null;
 		
 		int result = UserDAO.login(user);
-		String agent =request.getHeader("User-Agent");
-		System.out.println("agent: " + agent);
-
-		String browser = getBrowser(agent);
-		String ip_addr = request.getRemoteAddr();
-		String os = getOS(agent);
-		System.out.println("os: " + os);
-		System.out.println("browser: " + browser);
-		System.out.println("ip_addr: " + ip_addr);
-		UserLoginHistoryVO ulhVO = new UserLoginHistoryVO();
-		ulhVO.setI_user(user.getI_user());
-		ulhVO.setOs(os);
-		ulhVO.setIp_addr(ip_addr);
-		ulhVO.setBrowser(browser);
-		
-		int result2 = UserDAO.insUserLoginHistory(ulhVO);
-		System.out.println("ip result: " + result2);
-		request.setAttribute("data", ulhVO);
-		//로그인 히스토리 기록
-		
-		
-		
+		System.out.println("result : " + result);
 		if(result!=1) {
 			switch(result) {
 			case 2:
@@ -74,22 +58,42 @@ public class LoginSer extends HttpServlet {
 				System.out.println("Id Error!!!!");
 				break;
 			}
-			request.setAttribute("data", user);
+			request.setAttribute("user_id", user_id);
 			request.setAttribute("msg", msg);
 			doGet(request,response);
-			
-			
-
-		}else if(result==1) {
-			System.out.println(user.getNm());
-			response.sendRedirect("/board/list");
-			HttpSession hs = request.getSession();
-			hs.setAttribute(Const.LOGIN_USER, user);
-			System.out.println("로그인 성공");
-			System.out.println("result : " + result);
+			return;
 		}
 		
 		
+		String agent =request.getHeader("User-Agent");
+		System.out.println("agent: " + agent);
+
+		String browser = getBrowser(agent);
+		String ip_addr = request.getRemoteAddr();
+		String os = getOS(agent);
+		System.out.println("os: " + os);
+		System.out.println("browser: " + browser);
+		System.out.println("ip_addr: " + ip_addr);
+		
+		
+		UserLoginHistoryVO ulhVO = new UserLoginHistoryVO();
+		ulhVO.setI_user(user.getI_user());
+		ulhVO.setOs(os);
+		ulhVO.setIp_addr(ip_addr);
+		ulhVO.setBrowser(browser);
+		
+		UserDAO.insUserLoginHistory(ulhVO);
+		//로그인 히스토리 기록
+		
+		
+		
+		
+		HttpSession hs = request.getSession();
+		hs.setAttribute(Const.LOGIN_USER, user);
+		
+		System.out.println("로그인 성공");
+		response.sendRedirect("/board/list");
+			
 //		if(result !=1) {
 //			request.setAttribute("data", user);
 //			doGet(request,response);

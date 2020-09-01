@@ -7,7 +7,14 @@ public class BoardDomain extends BoardVO{
 	private int eIdx;
 	private int sIdx;
 	private String searchText;
+	private String profile_img;
 	
+	public String getProfile_img() {
+		return profile_img;
+	}
+	public void setProfile_img(String profile_img) {
+		this.profile_img = profile_img;
+	}
 	public String getSearchText() {
 		return searchText;
 	}

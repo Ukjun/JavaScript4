@@ -75,7 +75,9 @@ public class UserDAO {
 		});
 	}
 	public static int login(UserVO param) {
-		String sql = "select i_user, user_pw, nm from t_user where user_id=?";
+		String sql = "select i_user, user_pw, nm "
+				+ "from t_user "
+				+ "where user_id = ? ";
 		
 		return JdbcTemplate.executeQuery(sql, new JdbcSelectInterface() {
 
@@ -100,8 +102,10 @@ public class UserDAO {
 						return 1;
 					}else
 						return 2;
-				}else
-				return 3;
+				}else {
+					return 3;
+				}
+				
 			}
 
 			@Override

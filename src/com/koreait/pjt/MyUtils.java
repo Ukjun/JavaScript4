@@ -55,7 +55,6 @@ public class MyUtils {
 	
 	//return true : 로그인이 안됨 , false: 로그인이 된 상태
 	public static boolean isLogout(HttpServletRequest request)throws IOException{
-		HttpSession hs = request.getSession();
 		if(getLoginUser(request)==null) {
 			return true;
 		}else

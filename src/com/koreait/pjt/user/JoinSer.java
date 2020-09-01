@@ -46,13 +46,15 @@ public class JoinSer extends HttpServlet {
 		user.setEmail(email);
 		int result = UserDAO.insUser(user);
 		
+		
 		if(result!=1) {
 			request.setAttribute("msg", "Error!!!!");
 			request.setAttribute("data", user);
 			
 			doGet(request,response);
 			return;
-		}else if(result==1) {
+		}
+		else if(result==1) {
 			response.sendRedirect("/login");
 		}
 	}

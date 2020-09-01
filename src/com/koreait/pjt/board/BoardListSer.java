@@ -29,6 +29,11 @@ public class BoardListSer extends HttpServlet {
 		
 		HttpSession hs = (HttpSession)request.getSession();
 		
+		if(MyUtils.isLogout(request)) {
+			response.sendRedirect("/login");
+			return;
+		}
+		
 		String searchText = request.getParameter("search");
 		searchText = (searchText == null ? "":searchText);
 		

@@ -17,25 +17,23 @@ import com.koreait.pjt.vo.UserVO;
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
-/**
- * Servlet implementation class ProfileSer
- */
+
 @WebServlet("/profile")
 public class ProfileSer extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     //프로필 화면 ( 나의 프로필 이미지, 이미지 변경가능한 화면)
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		UserVO loginUser = MyUtils.getLoginUser(request);		
-		request.setAttribute("data", UserDAO.selUser(loginUser.getI_user()));
+		UserVO LoginUser = MyUtils.getLoginUser(request);		
+		request.setAttribute("data", UserDAO.selUser(LoginUser.getI_user()));
 		
 		ViewResolver.forward("user/profile", request, response);
 	}
 
 	//이미지 변경 처리
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		UserVO loginUser =MyUtils.getLoginUser(request); 
-		String savePath = getServletContext().getRealPath("img") + "/user/" + loginUser.getI_user();
+		UserVO LoginUser =MyUtils.getLoginUser(request); 
+		String savePath = getServletContext().getRealPath("img") + "/user/" + LoginUser.getI_user();
 		System.out.println("savePath : " + savePath);
 		
 		File dir = new File(savePath);
@@ -96,7 +94,7 @@ public class ProfileSer extends HttpServlet {
 		if(saveFileNm != null) {
 			UserVO param = new UserVO();
 			param.setProfile_img(saveFileNm);
-			param.setI_user(loginUser.getI_user());
+			param.setI_user(LoginUser.getI_user());
 			UserDAO.updUser(param);
 		}
 		response.sendRedirect("/profile");
