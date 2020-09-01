@@ -10,7 +10,14 @@ public class BoardDomain extends BoardVO{
 	private String profile_img;
 	private int like_count;
 	private int cnt_count;
+	private int i_like;
 	
+	public int getI_like() {
+		return i_like;
+	}
+	public void setI_like(int i_like) {
+		this.i_like = i_like;
+	}
 	public int getLike_count() {
 		return like_count;
 	}

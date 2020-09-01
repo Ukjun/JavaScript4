@@ -14,6 +14,8 @@
 %>
 <html>
 <link href="https://fonts.googleapis.com/css2?family=Gamja+Flower&family=Nanum+Pen+Script&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
 <head>
 <style>
 *{margin:0px auto; padding:0px; font-family: 'Gamja Flower', sans-serif; font-size: 25px}
@@ -108,6 +110,7 @@ th:last-child{
 		<th>작 성 일 자</th>
 		<th>좋아요수</th>
 		<th>댓글수</th>
+		<th>Y/N</th>
 	</tr>
 	
 	<c:choose>
@@ -167,6 +170,10 @@ th:last-child{
 				<td>${item.r_dt }</td>
 				<td>${item.like_count }</td>
 				<td>${item.cnt_count}</td>
+				<td class="m_td">
+					<c:if test="${item.i_like ==0}"> <span class="material-icons">favorite_border</span></c:if>
+					<c:if test="${item.i_like ==1}"> <span class="material-icons">favorite</span></c:if>
+				</td>
 		<!-- <td><input type="button" value="좋아요"></td> -->
 			</tr>
 			</c:forEach>

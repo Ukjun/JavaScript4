@@ -28,7 +28,7 @@ public class BoardListSer extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		HttpSession hs = (HttpSession)request.getSession();
-		
+		UserVO LoginUser = MyUtils.getLoginUser(request);
 		if(MyUtils.isLogout(request)) {
 			response.sendRedirect("/login");
 			return;
@@ -48,7 +48,7 @@ public class BoardListSer extends HttpServlet {
 		recordCnt = (recordCnt == 0 ? 3 : recordCnt);
 		
 				
-		
+		para.setI_user(LoginUser.getI_user());
 		para.setRecord_cnt(recordCnt);
 		para.setSearchText("%"+searchText+"%");
 		int pageCnt = BoardDAO.selPagingCnt(para);
