@@ -109,8 +109,6 @@ th:last-child{
 		<th colspan="2">작 성 자</th>
 		<th>작 성 일 자</th>
 		<th>좋아요수</th>
-		<th>댓글수</th>
-		<th>Y/N</th>
 	</tr>
 	
 	<c:choose>
@@ -152,9 +150,11 @@ th:last-child{
 			<tr class="itemRow" onclick="moveToDetail(${item.i_board })" >
 				<td>${item.i_board }</td>
 				<td>${item.title }</td>
-				<td>${item.ctnt }</td>
+				<td>${item.ctnt }(${item.cnt_count })</td>
 		 		<td>${item.hits }</td>
 				<td>
+					<c:if test="${item.i_like ==0}"> <span class="material-icons">favorite_border</span></c:if>
+					<c:if test="${item.i_like ==1}"> <span class="material-icons">favorite</span></c:if>
 					<div class="containerpImg">
 						<c:choose>
 							<c:when test="${item.profile_img != null}" >
@@ -166,14 +166,13 @@ th:last-child{
 						</c:choose>
 					</div>
 					</td>
-				<td>${item.nm }</td>
+				<td>
+					${item.nm }
+					
+				</td>
 				<td>${item.r_dt }</td>
 				<td>${item.like_count }</td>
-				<td>${item.cnt_count}</td>
-				<td class="m_td">
-					<c:if test="${item.i_like ==0}"> <span class="material-icons">favorite_border</span></c:if>
-					<c:if test="${item.i_like ==1}"> <span class="material-icons">favorite</span></c:if>
-				</td>
+
 		<!-- <td><input type="button" value="좋아요"></td> -->
 			</tr>
 			</c:forEach>
