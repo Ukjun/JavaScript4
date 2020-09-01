@@ -8,7 +8,21 @@ public class BoardDomain extends BoardVO{
 	private int sIdx;
 	private String searchText;
 	private String profile_img;
+	private int like_count;
+	private int cnt_count;
 	
+	public int getLike_count() {
+		return like_count;
+	}
+	public void setLike_count(int like_count) {
+		this.like_count = like_count;
+	}
+	public int getCnt_count() {
+		return cnt_count;
+	}
+	public void setCnt_count(int cnt_count) {
+		this.cnt_count = cnt_count;
+	}
 	public String getProfile_img() {
 		return profile_img;
 	}

@@ -106,6 +106,8 @@ th:last-child{
 		<th>조 회 수</th>
 		<th colspan="2">작 성 자</th>
 		<th>작 성 일 자</th>
+		<th>좋아요수</th>
+		<th>댓글수</th>
 	</tr>
 	
 	<c:choose>
@@ -163,6 +165,8 @@ th:last-child{
 					</td>
 				<td>${item.nm }</td>
 				<td>${item.r_dt }</td>
+				<td>${item.like_count }</td>
+				<td>${item.cnt_count}</td>
 		<!-- <td><input type="button" value="좋아요"></td> -->
 			</tr>
 			</c:forEach>

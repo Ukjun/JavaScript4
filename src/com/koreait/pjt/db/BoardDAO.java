@@ -138,14 +138,23 @@ public class BoardDAO {
 				+ " FROM t_board4 A INNER JOIN t_user B ON A.i_user = B.i_user "
 				+ " ORDER BY i_board DESC ";
 		*/
-		String sql = " SELECT A.* FROM ( "
+		String sql = " SELECT A.* ,nvl(B.like_cnt, 0) as like_count , nvl(C.cnt,0) as cnt_count FROM ( "
 				+ " SELECT ROWNUM as RNUM, A.* FROM ( "
 				+ " SELECT A.i_board, A.title, A.hits, A.i_user, A.r_dt, B.nm, B.profile_img"
 				+ " FROM t_board4 A INNER JOIN t_user B ON A.i_user = B.i_user "
 				+ "	where A.title like ? "
 				+ " ORDER BY i_board DESC "
 				+ " ) A WHERE ROWNUM <= ? "
-				+ " ) A WHERE A.RNUM > ? ";
+				+ " ) A "
+				+ " left join ( "
+				+ " select i_board, count(i_board) as like_cnt from t_board4_like group by i_board "
+				+ " ) B "
+				+ " on A.i_board= B.i_board "
+				+ " left join ( "
+				+ " select i_board, count(i_board) as cnt from t_board4_cmt group by i_board "
+				+ " )C "
+				+ " on A.i_board = C.i_board "
+				+ " WHERE A.RNUM > ? ";
 		
 		int result = JdbcTemplate.executeQuery(sql, new JdbcSelectInterface() {
 
@@ -166,6 +175,8 @@ public class BoardDAO {
 					String r_dt = rs.getNString("r_dt");
 					String nm = rs.getNString("nm");
 					String profile_img = rs.getNString("profile_img");
+					int like_count = rs.getInt("like_count");
+					int cnt_count = rs.getInt("cnt_count");
 					
 					BoardDomain vo = new BoardDomain();
 					vo.setI_board(i_board);
@@ -175,6 +186,8 @@ public class BoardDAO {
 					vo.setR_dt(r_dt);
 					vo.setNm(nm);
 					vo.setProfile_img(profile_img);
+					vo.setLike_count(like_count);
+					vo.setCnt_count(cnt_count);
 					
 					list.add(vo);
 				}

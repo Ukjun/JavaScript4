@@ -62,7 +62,8 @@
 							<c:otherwise>
 								<img class="pImg" onclick="window.open(this.src)" src="/img/default_profile.jpg">
 							</c:otherwise>
-					</c:choose></td>
+					</c:choose>
+				</td>
 				<td class="m_td">
 					${data.nm}
 				</td>
