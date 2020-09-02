@@ -141,6 +141,11 @@ th:last-child{
 		
 		<form id="serFrm" action="/board/list">
 			<div class = "searchtxt">
+				<select name = "searchType">
+					<option value="a">${searchType == 'a' ? 'selected' : ''}제목</option>
+					<option value="b">${searchType == 'b' ? 'selected' : ''}내용</option>
+					<option value="c">${searchType == 'c' ? 'selected' : ''}제목+내용</option>
+				</select>
 				<input type="search" name="search">
 				<input type="submit" name="serTransmit" value="검색">
 			</div>

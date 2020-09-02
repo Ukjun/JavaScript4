@@ -33,6 +33,10 @@ public class BoardListSer extends HttpServlet {
 			response.sendRedirect("/login");
 			return;
 		}
+		String searchType = request.getParameter("searchType");
+		searchType = (searchType == null ) ? "a" : searchType;
+		request.setAttribute("searchType", searchType);
+		
 		
 		String searchText = request.getParameter("search");
 		searchText = (searchText == null ? "":searchText);
@@ -47,7 +51,7 @@ public class BoardListSer extends HttpServlet {
 		System.out.println("recordCnt : " + recordCnt);
 		recordCnt = (recordCnt == 0 ? 3 : recordCnt);
 		
-				
+		para.setSearchType(searchType);
 		para.setI_user(LoginUser.getI_user());
 		para.setRecord_cnt(recordCnt);
 		para.setSearchText("%"+searchText+"%");

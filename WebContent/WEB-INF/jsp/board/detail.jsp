@@ -40,7 +40,7 @@
 <body>
 	<div id="container">
 		<div id="right">
-			<a href="/board/list?page=${param.page }&record_cnt=${param.record_cnt}&search=${param.search}" class="mar_l">뒤로가기</a>
+			<a href="/board/list?page=${param.page }&record_cnt=${param.record_cnt}&search=${param.search}&${param.searchType}" class="mar_l">뒤로가기</a>
 			<c:if test="${LoginUser.i_user == data.i_user}">
 				<a href="/board/regmod?page=${param.page }&record_cnt=${param.record_cnt}&search=${param.search}&i_board=${data.i_board}" class="mar_l">수정</a>
 				<form id="frm" action="/board/delete?page=${param.page }&record_cnt=${param.record_cnt}&search=${param.search}" method="post">
