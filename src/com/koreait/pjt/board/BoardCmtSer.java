@@ -43,7 +43,7 @@ public class BoardCmtSer extends HttpServlet {
 		vo.setI_cmt(i_cmt);
 		vo.setI_user(loginUser.getI_user());
 		BoardCmtDAO.deleteCmt(vo);
-		
+		// 댓글 삭제시 주소 오류 
 		String target = String.format("/board/detail?&page=%s&record_cnt=%s&search=%s&i_board=%d"
 				, page, record_cnt, searchText,i_board);
 		response.sendRedirect(target);
