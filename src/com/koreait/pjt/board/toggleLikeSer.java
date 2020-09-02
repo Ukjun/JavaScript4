@@ -27,11 +27,12 @@ public class toggleLikeSer extends HttpServlet {
 		String strYn_like = request.getParameter("yn_like");
 		int yn_like = MyUtils.parseStringToInt(strYn_like, 0);
 		
-		
+		System.out.println("Toggle Test!!!!!!!!!!!!!");
 		//테스트
 		String searchText = request.getParameter("search");
 		String page = request.getParameter("page");
-		String record_cnt = request.getParameter("record_cnt");
+		String record_cnt = request.getParameter("record_cnt"); 
+		String searchType = request.getParameter("searchType");
 		
 		System.out.println("page= " + page);
 		System.out.println("searchText= " + searchText);
@@ -53,8 +54,8 @@ public class toggleLikeSer extends HttpServlet {
 		}else {
 			BoardDAO.toggleInsert(para);
 		}
-		String target = String.format("/board/detail?&page=%s&record_cnt=%s&search=%s&i_board=%s"
-				, page, record_cnt, searchText,strI_board);
+		String target = String.format("/board/detail?&page=%s&record_cnt=%s&search=%s&searchType=%s&i_board=%d"
+				, page, record_cnt, searchText,searchType,i_board);
 		response.sendRedirect(target);
 	}
 

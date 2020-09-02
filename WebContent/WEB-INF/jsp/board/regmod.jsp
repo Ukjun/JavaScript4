@@ -25,7 +25,7 @@
 <body>
 	<div id="container">
 		<h2 class="h33">게시글작성</h2>
-		<form id="frm" action="/board/regmod?page=${param.page }&record_cnt=${param.record_cnt}&search=${param.search}" method="post">
+		<form id="frm" action="/board/regmod?page=${param.page }&record_cnt=${param.record_cnt}&search=${param.search}&searchType=${param.searchType}" method="post">
 			<div><input class="ipt" type="text" class="input"name="title" placeholder="제목을 작성해주세요" value="${data.title}" style=color:#000000;></div>
 			<div><textarea class="tpt" name="ctnt" placeholder="내용을 작성해주세요" style="color:#000000;">${data.ctnt}</textarea></div>
 			<input type="hidden" name="i_board" value="${data.i_board}">

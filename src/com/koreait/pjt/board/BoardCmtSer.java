@@ -39,13 +39,14 @@ public class BoardCmtSer extends HttpServlet {
 		String searchText = request.getParameter("search");
 		String page = request.getParameter("page");
 		String record_cnt = request.getParameter("record_cnt");
-		
+		String searchType = request.getParameter("searchType");
+
 		vo.setI_cmt(i_cmt);
 		vo.setI_user(loginUser.getI_user());
 		BoardCmtDAO.deleteCmt(vo);
 		// 댓글 삭제시 주소 오류 
-		String target = String.format("/board/detail?&page=%s&record_cnt=%s&search=%s&i_board=%d"
-				, page, record_cnt, searchText,i_board);
+		String target = String.format("/board/detail?&page=%s&record_cnt=%s&search=%s&searchType=%s&i_board=%d"
+				, page, record_cnt, searchText,searchType,i_board);
 		response.sendRedirect(target);
 	}
 
@@ -62,6 +63,8 @@ public class BoardCmtSer extends HttpServlet {
 		String searchText = request.getParameter("search");
 		String page = request.getParameter("page");
 		String record_cnt = request.getParameter("record_cnt");
+		String searchType = request.getParameter("searchType");
+
 		
 		System.out.println("page: " + page);
 		System.out.println("search: " + searchText);
@@ -96,8 +99,8 @@ public class BoardCmtSer extends HttpServlet {
 			System.out.println("after i_cmt: " + i_cmt);
 			break;
 		}
-		String target = String.format("/board/detail?&page=%s&record_cnt=%s&search=%s&i_board=%d"
-				, page, record_cnt, searchText,i_board);
+		String target = String.format("/board/detail?&page=%s&record_cnt=%s&search=%s&searchType=%s&i_board=%d"
+				, page, record_cnt, searchText,searchType,i_board);
 		response.sendRedirect(target);
 	}
 

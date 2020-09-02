@@ -86,16 +86,17 @@ public class BoardDetailSer extends HttpServlet {
 			
 			
 			//int check = BoardDAO.likeCheck(para);
-			domain = BoardDAO.detailBoardList(para);
-			System.out.println("detail title: " + domain.getTitle());
-			if(!"".equals(searchText)) {
-				String title = domain.getTitle();
-				title = title.replace(searchText, "<span class=\"highlight\">" + searchText +"</span>");
-				domain.setTitle(title);
-			}
-			
-			
-			request.setAttribute("data", domain);
+//			domain = BoardDAO.detailBoardList(para);
+//			System.out.println("detail title: " + domain.getTitle());
+//			if(!"".equals(searchText)) {
+//				String title = domain.getTitle();
+//				title = title.replace(searchText, "<span class=\"highlight\">" + searchText +"</span>");
+//				domain.setTitle(title);
+//			}
+//			
+//			
+//			request.setAttribute("data", domain);
+			request.setAttribute("data", BoardDAO.detailBoardList(para));
 			ViewResolver.forwardLoginCheck("board/detail", request, response);
 		}	
 	}

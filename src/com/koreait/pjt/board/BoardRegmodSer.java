@@ -30,9 +30,7 @@ public class BoardRegmodSer extends HttpServlet {
 		
 		int i_board = MyUtils.parseStringToInt(strI_board, 0);
 		
-		String searchText = request.getParameter("search");
-		String page = request.getParameter("page");
-		String record_cnt = request.getParameter("record_cnt");
+		
 		
 		
 		vo.setI_board(i_board);
@@ -57,7 +55,8 @@ public class BoardRegmodSer extends HttpServlet {
 		String searchText = request.getParameter("search");
 		String page = request.getParameter("page");
 		String record_cnt = request.getParameter("record_cnt");
-		
+		String searchType = request.getParameter("searchType");
+
 		
 		
 		UserVO util = (UserVO)hs.getAttribute(Const.LOGIN_USER);
@@ -82,8 +81,8 @@ public class BoardRegmodSer extends HttpServlet {
 		System.out.println("result : " + result);
 		System.out.println(vo.getI_user());
 		if(result==1) {
-			String target = String.format("/board/detail?&page=%s&record_cnt=%s&search=%s&i_board=%d"
-					, page, record_cnt, searchText,i_board);
+			String target = String.format("/board/detail?&page=%s&record_cnt=%s&search=%s&searchType=%s&i_board=%d"
+					, page, record_cnt, searchText,searchType,i_board);
 			response.sendRedirect(target);
 		}
 	}
