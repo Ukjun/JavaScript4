@@ -63,7 +63,13 @@ public class BoardDetailSer extends HttpServlet {
 //		System.out.println("recordCnt : " + recordCnt);
 //		recordCnt = (recordCnt == 0 ? 3 : recordCnt);
 //		request.setAttribute("page", page);
+		String searchType = request.getParameter("searchType");
+		searchType = (searchType == null ) ? "a" : searchType;
+		request.setAttribute("searchType", searchType);
 		
+		
+		String searchText = request.getParameter("search");
+		searchText = (searchText == null ? "":searchText);
 		
 		System.out.println("DetailSer i_board = " + i_board);
 		List<?> list = BoardCmtDAO.selCmt(i_board);
@@ -80,10 +86,16 @@ public class BoardDetailSer extends HttpServlet {
 			
 			
 			//int check = BoardDAO.likeCheck(para);
+			domain = BoardDAO.detailBoardList(para);
+			System.out.println("detail title: " + domain.getTitle());
+			if(!"".equals(searchText)) {
+				String title = domain.getTitle();
+				title = title.replace(searchText, "<span class=\"highlight\">" + searchText +"</span>");
+				domain.setTitle(title);
+			}
 			
 			
-			
-			request.setAttribute("data", BoardDAO.detailBoardList(para));
+			request.setAttribute("data", domain);
 			ViewResolver.forwardLoginCheck("board/detail", request, response);
 		}	
 	}

@@ -35,6 +35,7 @@
 	.material-icons{color: #000000; cursor: pointer;}
 	#reg_cmt { visibility: hidden;}
 	.pImg{width:48px; height: 48px; border-radius: 50%; }
+	.highlight { color : aqua;}
 </style> 
 </head>
 <body>

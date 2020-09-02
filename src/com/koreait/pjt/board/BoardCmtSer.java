@@ -35,11 +35,18 @@ public class BoardCmtSer extends HttpServlet {
 		int i_board = MyUtils.parseStringToInt(strI_board, 0);
 		UserVO loginUser = MyUtils.getLoginUser(request);
 		System.out.println("i_cmt: " + i_cmt);
+		
+		String searchText = request.getParameter("search");
+		String page = request.getParameter("page");
+		String record_cnt = request.getParameter("record_cnt");
+		
 		vo.setI_cmt(i_cmt);
 		vo.setI_user(loginUser.getI_user());
 		BoardCmtDAO.deleteCmt(vo);
 		
-		response.sendRedirect("/board/detail?i_board="+i_board);
+		String target = String.format("/board/detail?&page=%s&record_cnt=%s&search=%s&i_board=%d"
+				, page, record_cnt, searchText,i_board);
+		response.sendRedirect(target);
 	}
 
 	//댓글 (등록/수정)
