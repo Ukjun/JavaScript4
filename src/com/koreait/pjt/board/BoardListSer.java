@@ -85,10 +85,20 @@ public class BoardListSer extends HttpServlet {
 		System.out.println(BoardDAO.selPagingCnt(para));
 		
 		request.setAttribute("pageCnt", BoardDAO.selPagingCnt(para));
-		request.setAttribute("data", BoardDAO.selBoardList(para));
+		List<BoardDomain> list = BoardDAO.selBoardList(para);
+		//하이라이트 처리
+		if(!"".equals(searchText)&& ("a".equals(searchType) || "c".equals(searchType))) {
+			for(BoardDomain item : list) {
+				String title = item.getTitle();
+				title = title.replace(searchText, "<span class=\"highlight\">" + searchText +"</span>");
+				item.setTitle(title);
+			}
+		}
+		// 처리를 해서 나온 결과를 보내야한다 !!!!!!!!!!
+		request.setAttribute("data", list);
 		
 		
-		//request.setAttribute("data", list);
+		//request.setAttribute("list", list);
 		ViewResolver.forwardLoginCheck("board/list", request, response);
 	}
 

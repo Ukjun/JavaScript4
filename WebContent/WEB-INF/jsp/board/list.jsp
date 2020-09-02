@@ -16,6 +16,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Gamja+Flower&family=Nanum+Pen+Script&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
       rel="stylesheet">
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.8.2.js"></script>
 <head>
 <style>
 *{margin:0px auto; padding:0px; font-family: 'Gamja Flower', sans-serif; font-size: 25px}
@@ -69,9 +70,11 @@ th:last-child{
 	.searchtxt{text-align: center;}
 	.pImg{width:48px; height: 48px; border-radius: 50%; }
 	.containerpImg {display:inline-block; overflow : hidden;}
+	td[id="test"]{ color : red;}
+	.highlight {color: aqua;}
 </style>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>document</title>
 </head>
 <body>
 <div id="container">
@@ -142,11 +145,11 @@ th:last-child{
 		<form id="serFrm" action="/board/list">
 			<div class = "searchtxt">
 				<select name = "searchType">
-					<option value="a">${searchType == 'a' ? 'selected' : ''}제목</option>
-					<option value="b">${searchType == 'b' ? 'selected' : ''}내용</option>
-					<option value="c">${searchType == 'c' ? 'selected' : ''}제목+내용</option>
+					<option value="a" ${searchType == 'a' ? 'selected': ''}>제목</option>
+					<option value="b" ${searchType == 'b' ? 'selected': ''}>내용</option>
+					<option value="c" ${searchType == 'c' ? 'selected': ''}>제목+내용</option>
 				</select>
-				<input type="search" name="search">
+				<input type="search" name="search"  value ="${param.search}" >
 				<input type="submit" name="serTransmit" value="검색">
 			</div>
 		</form>
@@ -157,7 +160,7 @@ th:last-child{
 				<td>${item.title }</td>
 				<td>${item.ctnt }(${item.cnt_count })</td>
 		 		<td>${item.hits }</td>
-				<td>
+				<td id="test">
 					<c:if test="${item.i_like ==0}"> <span class="material-icons">favorite_border</span></c:if>
 					<c:if test="${item.i_like ==1}"> <span class="material-icons">favorite</span></c:if>
 					<div class="containerpImg">
@@ -200,13 +203,16 @@ th:last-child{
 </div>
 </body>
 <script>
-
+/* $(document).ready(function(){
+	$('td:contains("${param.search}")').css('color','green');
+}); */
 function moveToDetail(i_board){
 	console.log('moveToDetailSer - i_board:'+i_board)
-	location.href ="/board/detail?page=${page}&record_cnt=${param.record_cnt}&search=${param.search}&i_board="+i_board;
+	location.href ="/board/detail?page=${page}&record_cnt=${param.record_cnt}&search=${param.search}&searchType=${searchType}&i_board="+i_board;
 }
 
 function changeRecordCnt(){
+	
 	selFrm.submit();
 }
 </script>
