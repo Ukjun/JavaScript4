@@ -45,4 +45,12 @@ img{width:96px; height: 96px; border-radius: 50%;}
 	<div><a href= "/board/list">뒤로가기</a></div>
 	
 </body>
+<script>
+	var proc = '${param.proc}'
+	switch(proc){
+	case '1':
+		alert("Change Password Success!")
+		break;
+	}
+</script>
 </html>

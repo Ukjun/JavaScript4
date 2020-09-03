@@ -24,7 +24,11 @@ public class ProfileSer extends HttpServlet {
        
     //프로필 화면 ( 나의 프로필 이미지, 이미지 변경가능한 화면)
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		UserVO LoginUser = MyUtils.getLoginUser(request);		
+		UserVO LoginUser = MyUtils.getLoginUser(request);	
+		if(LoginUser ==null) {
+			response.sendRedirect("/login");
+			return;
+		}
 		request.setAttribute("data", UserDAO.selUser(LoginUser.getI_user()));
 		
 		ViewResolver.forward("user/profile", request, response);

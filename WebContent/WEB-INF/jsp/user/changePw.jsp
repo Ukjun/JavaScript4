@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<link href="https://fonts.googleapis.com/css2?family=Gamja+Flower&family=Nanum+Pen+Script&display=swap" rel="stylesheet">
 <!DOCTYPE html>
 <html>
 <head>
@@ -38,6 +39,7 @@
 				<label><input type = "submit" value="확인"></label>
 			</div>
 		</form>
+		<a href="/profile"><button>돌아가기</button></a>
 	</c:if>
 </body>
 <script>

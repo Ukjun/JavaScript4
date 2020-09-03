@@ -304,11 +304,20 @@ public class BoardDAO {
 //				+ "on A.i_user = B.i_user "
 //				+ "where i_board=?";
 		String sql = "select A.i_board, A.title, A.ctnt, A.hits, A.i_user, "
-				+ "A.r_dt, B.nm, B.profile_img, decode(C.i_user,null,0,1) as yn_like "
-				+ "from t_board4 A inner join t_user B "
+				+ "A.r_dt, B.nm, B.profile_img, decode(C.i_user,null,0,1) as yn_like"
+				+ ", nvl(D.cnt,0)as like_count "
+				+ "from t_board4 A "
+				+ "inner join t_user B "
 				+ "on A.i_user = B.i_user "
 				+ "left join t_board4_like C "
-				+ "on A.i_board = C.i_board and C.i_user=? "
+				+ "on A.i_board = C.i_board "
+				+ "and C.i_user=? "
+				+ "left join ( "
+				+ "		select i_board, count(i_board)as cnt from t_board4_like "
+				+ "		where i_board = ? "
+				+ "		group by i_board "
+				+ ") D "
+				+ "on A.i_board = D.i_board "
 				+ "where A.i_board=? ";
 		
 		int resultInt = JdbcTemplate.executeQuery(sql, new JdbcSelectInterface() {
@@ -318,6 +327,7 @@ public class BoardDAO {
 				// TODO Auto-generated method stub
 				ps.setInt(1, para.getI_user());
 				ps.setInt(2, para.getI_board());
+				ps.setInt(3, para.getI_board());
 			}
 
 			@Override
@@ -333,6 +343,7 @@ public class BoardDAO {
 					vo.setNm(rs.getNString("nm"));
 					vo.setYn_like(rs.getInt("yn_like"));
 					vo.setProfile_img(rs.getNString("profile_img"));
+					vo.setLike_count(rs.getInt("like_count"));
 					return 1;
 				}else
 					return 2;
@@ -447,47 +458,41 @@ public class BoardDAO {
 		});
 	}
 	
-//	public static int likeCheck(BoardVO vo) {
-//		String sql = "select A.i_board, A.title, A.ctnt, A.hits, A.i_user, "
-//				+ "A.r_dt, B.nm, decode(C.i_user,null,0,1)as yn_like "
-//				+ "from t_board4 A inner join t_user B "
-//				+ "on A.i_user = B.i_user "
-//				+ "left join t_board4_like C "
-//				+ "on A.i_board = C.i_board and C.i_user=? "
-//				+ "where A.i_board=? ";
-//		return JdbcTemplate.executeQuery(sql, new JdbcSelectInterface() {
-//
-//			@Override
-//			public void prepared(PreparedStatement ps) throws SQLException {
-//				// TODO Auto-generated method stub
-//				ps.setInt(1, vo.getI_user());
-//				ps.setInt(2, vo.getI_board());
-//			}
-//
-//			@Override
-//			public int executeQuery(ResultSet rs) throws SQLException {
-//				// TODO Auto-generated method stub
-//				if(rs.next()) {
-//					vo.setI_board(rs.getInt("i_board"));
-//					vo.setTitle(rs.getNString("title"));
-//					vo.setCtnt(rs.getNString("ctnt"));
-//					vo.setHits(rs.getInt("hits"));
-//					vo.setI_user(rs.getInt("i_user"));
-//					vo.setR_dt(rs.getNString("r_dt"));
-////					vo.setNm(rs.getNString("nm"));
-//					vo.setLike(rs.getInt("yn_like"));
-//					return 1;
-//				}else
-//					return 2;
-//				
-//			}
-//
-//			@Override
-//			public List<?> selBoard(ResultSet rs) {
-//				// TODO Auto-generated method stub
-//				return null;
-//			}
-//			
-//		});
-//	}
+	public static List<BoardDomain> selBoardLikeList(int i_board){
+		List<BoardDomain> list = new ArrayList();
+		String sql = "select B.i_user, B.nm, B.profile_img "
+				+ "from t_board4_like A "
+				+ "inner join t_user B "
+				+ "on A.i_user = B.i_user "
+				+ "where A.i_board = ? "
+				+ "order by A.r_dt asc ";
+		JdbcTemplate.executeQuery(sql, new JdbcSelectInterface() {
+			
+			@Override
+			public List<?> selBoard(ResultSet rs) {
+				// TODO Auto-generated method stub
+				return null;
+			}
+			
+			@Override
+			public void prepared(PreparedStatement ps) throws SQLException {
+				// TODO Auto-generated method stub
+				ps.setInt(1, i_board);
+			}
+			
+			@Override
+			public int executeQuery(ResultSet rs) throws SQLException {
+				// TODO Auto-generated method stub
+				while(rs.next()) {
+					BoardDomain vo = new BoardDomain();
+					vo.setI_user(rs.getInt("i_user"));
+					vo.setNm(rs.getNString("nm"));
+					vo.setProfile_img(rs.getNString("profile_img"));
+					list.add(vo);
+				}
+				return 0;
+			}
+		});
+		return list;
+	}
 }

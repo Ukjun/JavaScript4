@@ -164,15 +164,17 @@ th:last-child{
 					<c:if test="${item.i_like ==0}"> <span class="material-icons">favorite_border</span></c:if>
 					<c:if test="${item.i_like ==1}"> <span class="material-icons">favorite</span></c:if>
 					<div class="containerpImg">
-						<c:choose>
-							<c:when test="${item.profile_img != null}" >
-								<img class="pImg" onclick="window.open(this.src)" src="/img/user/${item.i_user }/${item.profile_img}" >
-							</c:when>
-							<c:otherwise>
-								<img class="pImg" onclick="window.open(this.src)" src="/img/default_profile.jpg">
-							</c:otherwise>
-						</c:choose>
-					</div>
+									<c:choose>
+										<c:when test="${item.profile_img != null}">
+											<img class="pImg" onclick="window.open(this.src)"
+												src="/img/user/${item.i_user }/${item.profile_img}">
+										</c:when>
+										<c:otherwise>
+											<img class="pImg" onclick="window.open(this.src)"
+												src="/img/default_profile.jpg">
+										</c:otherwise>
+									</c:choose>
+								</div>
 					</td>
 				<td>
 					${item.nm }

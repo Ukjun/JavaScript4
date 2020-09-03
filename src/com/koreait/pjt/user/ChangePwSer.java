@@ -55,12 +55,8 @@ public class ChangePwSer extends HttpServlet {
 			param.setUser_id(LoginUser.getUser_id());
 			param.setUser_pw(user_pw);
 			param.setI_user(LoginUser.getI_user());
-			UserDAO.updUser(param);
-			int result2 = UserDAO.login(param);
-			System.out.println("result2 : " + result2);
-			if(result2 == 1) {
-				response.sendRedirect("/profile");
-			}
+			UserDAO.updUser(param);		
+			response.sendRedirect("/profile?proc=1");
 			break;
 		}
 	}
