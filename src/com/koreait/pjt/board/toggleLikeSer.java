@@ -1,6 +1,8 @@
 package com.koreait.pjt.board;
 
 import java.io.IOException;
+import java.net.URLEncoder;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -30,6 +32,7 @@ public class toggleLikeSer extends HttpServlet {
 		System.out.println("Toggle Test!!!!!!!!!!!!!");
 		//테스트
 		String searchText = request.getParameter("search");
+		searchText = URLEncoder.encode(searchText,"UTF-8");
 		String page = request.getParameter("page");
 		String record_cnt = request.getParameter("record_cnt"); 
 		String searchType = request.getParameter("searchType");

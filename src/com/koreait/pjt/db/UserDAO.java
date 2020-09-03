@@ -152,6 +152,21 @@ public class UserDAO {
 		return result;
 	}
 	
+	// 비밀번호 변경
+	public static int changePw(UserVO param) {
+		String sql = "update t_user set user_pw=? where user_id = ?";
+		return JdbcTemplate.excuteupdate(sql, new JdbcUpdateInterface() {
+			
+			@Override
+			public void update(Connection conn, PreparedStatement ps) throws SQLException {
+				// TODO Auto-generated method stub
+				ps.setNString(1, param.getUser_pw());
+				ps.setNString(2, param.getUser_id());
+			}
+		});
+	}
+	
+	
 	public static int updUser(UserVO param) {
 		// 문자열 관련 메소드 ~.append = 그 문자열 뒤에 문자/문자열을 추가 
 		StringBuilder sb = new StringBuilder("update t_user set m_dt = sysdate");

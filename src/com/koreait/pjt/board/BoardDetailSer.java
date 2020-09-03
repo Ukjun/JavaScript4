@@ -1,6 +1,7 @@
 package com.koreait.pjt.board;
 
 import java.io.IOException;
+import java.net.URLEncoder;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -69,7 +70,8 @@ public class BoardDetailSer extends HttpServlet {
 		
 		
 		String searchText = request.getParameter("search");
-		searchText = (searchText == null ? "":searchText);
+		searchText = (searchText == null ? " ": searchText );
+		searchText = URLEncoder.encode(searchText,"UTF-8");
 		
 		System.out.println("DetailSer i_board = " + i_board);
 		List<?> list = BoardCmtDAO.selCmt(i_board);

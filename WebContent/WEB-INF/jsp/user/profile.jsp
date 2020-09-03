@@ -16,6 +16,9 @@ img{width:96px; height: 96px; border-radius: 50%;}
 </head>
 <body>
 	<div>
+		<div>
+			<a href="/change"><button>비밀번호 변경</button></a>
+		</div>
 		<c:choose>
 				<c:when test="${data.profile_img != null}" >
 

@@ -1,6 +1,8 @@
 package com.koreait.pjt.board;
 
 import java.io.IOException;
+import java.net.URLEncoder;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -20,7 +22,7 @@ import com.koreait.pjt.vo.UserVO;
  */
 @WebServlet("/board/regmod")
 public class BoardRegmodSer extends HttpServlet {
-	BoardVO vo = new BoardVO();
+	
 	private static final long serialVersionUID = 1L;
     
 	//화면띄우는 용도(등록/수정)
@@ -31,7 +33,7 @@ public class BoardRegmodSer extends HttpServlet {
 		int i_board = MyUtils.parseStringToInt(strI_board, 0);
 		
 		
-		
+		BoardVO vo = new BoardVO();
 		
 		vo.setI_board(i_board);
 		
@@ -44,6 +46,7 @@ public class BoardRegmodSer extends HttpServlet {
 	//처리용도(DB에 등록/수정)
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession hs = request.getSession();
+		
 		String strI_board = request.getParameter("i_board");
 		int i_board = MyUtils.parseStringToInt(strI_board, 0);
 		String title = request.getParameter("title");
@@ -53,12 +56,19 @@ public class BoardRegmodSer extends HttpServlet {
 		
 		
 		String searchText = request.getParameter("search");
+		
+		
+		//한글로 파라미터 보낼떄 깨지는 현상 수정하는 코드
+		searchText = URLEncoder.encode(searchText,"UTF-8");
+		
+		
+		
 		String page = request.getParameter("page");
 		String record_cnt = request.getParameter("record_cnt");
 		String searchType = request.getParameter("searchType");
 
 		
-		
+		BoardVO vo = new BoardVO();
 		UserVO util = (UserVO)hs.getAttribute(Const.LOGIN_USER);
 		int result = -1;
 		
@@ -84,6 +94,10 @@ public class BoardRegmodSer extends HttpServlet {
 			String target = String.format("/board/detail?&page=%s&record_cnt=%s&search=%s&searchType=%s&i_board=%d"
 					, page, record_cnt, searchText,searchType,i_board);
 			response.sendRedirect(target);
+			System.out.println("reg search:" + searchText);
+			System.out.println("reg page:" + page);
+			System.out.println("reg searchType:" + searchType);
+			
 		}
 	}
 	private String swearWordFilter(final String ctnt) {

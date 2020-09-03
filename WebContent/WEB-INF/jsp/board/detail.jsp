@@ -6,10 +6,11 @@
    <link href="https://fonts.googleapis.com/css2?family=Gamja+Flower&family=Nanum+Pen+Script&display=swap" rel="stylesheet">
    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" 
    rel="stylesheet">
+   <% request.setCharacterEncoding("UTF-8"); %>
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
+<meta  http-equiv="Content-Type" content="text/html"; charset="UTF-8">
 <title>Insert title here</title>
 </head>
 <style>

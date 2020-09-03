@@ -1,6 +1,7 @@
 package com.koreait.pjt.board;
 
 import java.io.IOException;
+import java.net.URLEncoder;
 import java.util.Date;
 import java.util.List;
 
@@ -37,6 +38,7 @@ public class BoardCmtSer extends HttpServlet {
 		System.out.println("i_cmt: " + i_cmt);
 		
 		String searchText = request.getParameter("search");
+		searchText = URLEncoder.encode(searchText,"UTF-8");
 		String page = request.getParameter("page");
 		String record_cnt = request.getParameter("record_cnt");
 		String searchType = request.getParameter("searchType");
@@ -61,6 +63,8 @@ public class BoardCmtSer extends HttpServlet {
 		int i_board = MyUtils.getIntParameter(request, "i_board");
 		
 		String searchText = request.getParameter("search");
+		searchText = URLEncoder.encode(searchText,"UTF-8");
+
 		String page = request.getParameter("page");
 		String record_cnt = request.getParameter("record_cnt");
 		String searchType = request.getParameter("searchType");

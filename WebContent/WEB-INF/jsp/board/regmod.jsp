@@ -4,7 +4,7 @@
 <html>
 <link href="https://fonts.googleapis.com/css2?family=Gamja+Flower&family=Nanum+Pen+Script&display=swap" rel="stylesheet">
 <head>
-<meta charset="UTF-8">
+<meta  http-equiv="Content-Type" content="text/html"; charset="UTF-8">
 <title>Insert title here</title>
 </head>
 <style>
@@ -25,10 +25,14 @@
 <body>
 	<div id="container">
 		<h2 class="h33">게시글작성</h2>
-		<form id="frm" action="/board/regmod?page=${param.page }&record_cnt=${param.record_cnt}&search=${param.search}&searchType=${param.searchType}" method="post">
+		<form id="frm" action="/board/regmod" method="post">
 			<div><input class="ipt" type="text" class="input"name="title" placeholder="제목을 작성해주세요" value="${data.title}" style=color:#000000;></div>
 			<div><textarea class="tpt" name="ctnt" placeholder="내용을 작성해주세요" style="color:#000000;">${data.ctnt}</textarea></div>
 			<input type="hidden" name="i_board" value="${data.i_board}">
+			<input type="hidden" name="page" value="${param.page}">
+			<input type="hidden" name="record_cnt" value="${param.record_cnt}">
+			<input type="hidden" name="search" value="${param.search}">
+			<input type="hidden" name="searchType" value="${param.searchType}">
 			<div><input id="button" type="submit" value="등록"></div>
 		</form>
 	</div>
