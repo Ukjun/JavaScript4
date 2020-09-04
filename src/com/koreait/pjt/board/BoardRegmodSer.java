@@ -73,7 +73,7 @@ public class BoardRegmodSer extends HttpServlet {
 		int result = -1;
 		
 		String filterCtnt1 = scriptFilter(ctnt);
-		String filterCtnt2 = swearWordFilter(filterCtnt1);
+		swearWordFilter(filterCtnt1);
 		
 		vo.setI_board(i_board);
 		vo.setTitle(title);
@@ -82,6 +82,7 @@ public class BoardRegmodSer extends HttpServlet {
 		System.out.println("check i_board = " + i_board);
 		
 		
+		//i_board값 비교해서 작성인지 수정인지 판단
 		if(i_board==0) {
 			result = BoardDAO.insertList(vo);
 		}else {
@@ -100,11 +101,13 @@ public class BoardRegmodSer extends HttpServlet {
 			
 		}
 	}
+	
+	// 필터링 처리 
 	private String swearWordFilter(final String ctnt) {
 		String[] filter = {"미친년"};
 		String result = ctnt;
 		for(int i=0; i<filter.length; i++) {
-			result = result.replace(filter[i], "");
+			result = result.replace(filter[i], " ");
 			
 		}
 		return result;

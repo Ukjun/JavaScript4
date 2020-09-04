@@ -55,10 +55,12 @@ public class BoardDelSer extends HttpServlet {
 		int result = BoardDAO.deleteList(vo);
 		System.out.println("delete result: "+ result);
 		if(result ==1) {
+			//삭제 성공
 			String target = String.format("/board/list?&page=%s&record_cnt=%s&search=%s"
 					, page, record_cnt, searchText);
 			response.sendRedirect(target);
 		}else {
+			//삭제 실패
 			String target = String.format("/board/detail?&page=%s&record_cnt=%s&search=%s&i_board=%d"
 					, page, record_cnt, searchText,i_board);
 			response.sendRedirect(target);

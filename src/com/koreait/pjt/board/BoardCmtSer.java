@@ -29,6 +29,8 @@ public class BoardCmtSer extends HttpServlet {
 	// 댓글 삭제
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		
+		//화면에 띄울 항목들 파라미터 받아오기
 		String strI_cmt = request.getParameter("i_cmt");
 		int i_cmt = MyUtils.parseStringToInt(strI_cmt, 0);
 
@@ -38,6 +40,7 @@ public class BoardCmtSer extends HttpServlet {
 		System.out.println("i_cmt: " + i_cmt);
 
 		String searchText = request.getParameter("search");
+		// 한글로 검색시 한글깨짐 방지 
 		searchText = URLEncoder.encode(searchText, "UTF-8");
 		String page = request.getParameter("page");
 		String record_cnt = request.getParameter("record_cnt");
@@ -46,7 +49,8 @@ public class BoardCmtSer extends HttpServlet {
 		vo.setI_cmt(i_cmt);
 		vo.setI_user(loginUser.getI_user());
 		BoardCmtDAO.deleteCmt(vo);
-		// 댓글 삭제시 주소 오류
+		
+		// 검색시 값 유지하면서 전송
 		String target = String.format("/board/detail?&page=%s&record_cnt=%s&search=%s&searchType=%s&i_board=%d", page,
 				record_cnt, searchText, searchType, i_board);
 		response.sendRedirect(target);
@@ -77,7 +81,6 @@ public class BoardCmtSer extends HttpServlet {
 		System.out.println("before cmt: " + cmt);
 		System.out.println("before i_cmt: " + i_cmt);
 
-		Date now = new Date();
 		System.out.println("i_board : " + i_board);
 
 		vo.setI_cmt(i_cmt);

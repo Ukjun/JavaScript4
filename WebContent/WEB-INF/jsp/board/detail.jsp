@@ -235,18 +235,22 @@ a {
 							좋아요 갯수 : ${data.like_count }
 							<div id="likeListContainer">
 								<c:forEach items="${list}" var="item">
-									<div>
-										<c:choose>
-											<c:when test="${item.profile_img != null}">
-												<img class="pImg" onclick="window.open(this.src)"
-													src="/img/user/${item.i_user }/${item.profile_img}">
-											</c:when>
-											<c:otherwise>
-												<img class="pImg" onclick="window.open(this.src)"
-													src="/img/default_profile.jpg">
-											</c:otherwise>
-										</c:choose>
-										${item.nm }
+									<div class="likeItemContainer">
+										<div class="profileContainer">
+											<div class="profile">
+												<c:choose>
+													<c:when test="${item.profile_img != null}">
+														<img class="pImg" onclick="window.open(this.src)"
+															src="/img/user/${item.i_user }/${item.profile_img}">
+													</c:when>
+													<c:otherwise>
+														<img class="pImg" onclick="window.open(this.src)"
+															src="/img/default_profile.jpg">
+													</c:otherwise>
+												</c:choose>
+											</div>
+										</div>
+										<div class="nm">${item.nm }</div>
 									</div>
 								</c:forEach>
 							</div>

@@ -44,64 +44,30 @@ public class BoardDetailSer extends HttpServlet {
 		// 글작성시의 i_user와 로그인했을때의 i_user가 같지않을때 true가 반환되서 조회수올리기를 실행 
 //		ServletContext application = getServletContext();
 //		Integer readI_user = (Integer)application.getAttribute("read_" + strI_board);
-//		if(readI_user != loginUser.getI_user()) {
+//		System.out.println("readI_user: " + readI_user);
+//		if(readI_user == null || readI_user != loginUser.getI_user()) {
 //			
 //			para.setI_board(i_board);
 //			BoardDAO.addHits(i_board);
 //			application.setAttribute("read_"+strI_board,loginUser.getI_user());
+//			return;
 //		}
-		
+//		
 //		para.setI_board(i_board);
 //		BoardDAO.addHits(i_board);
 //		request.setAttribute("data", BoardDAO.detailBoardList(para));
 //		ViewResolver.forwardLoginCheck("board/detail", request, response);
 		
 		
-//		int page = MyUtils.getIntParameter(request, "page");
-//		page = (page == 0 ? 1 : page);
-//		
-//		int recordCnt = MyUtils.getIntParameter(request, "record_cnt");
-//		System.out.println("recordCnt : " + recordCnt);
-//		recordCnt = (recordCnt == 0 ? 3 : recordCnt);
-//		request.setAttribute("page", page);
-		String searchType = request.getParameter("searchType");
-		searchType = (searchType == null ) ? "a" : searchType;
-		request.setAttribute("searchType", searchType);
-		
-		
-		String searchText = request.getParameter("search");
-		searchText = (searchText == null ? " ": searchText );
-//		searchText = URLEncoder.encode(searchText,"UTF-8");
-		
-		System.out.println("DetailSer i_board = " + i_board);
-		List<?> list = BoardCmtDAO.selCmt(i_board);
-		request.setAttribute("allList", list);
-		System.out.println("cmt list size: " + list.size());
-		if(i_board==0) {
-			
-			response.sendRedirect("/board/list");
-			return;
-		}else {
-			para.setI_board(i_board);
-			para.setI_user(loginUser.getI_user());
-			BoardDAO.updateCount(para);
-			 
-			
-			//int check = BoardDAO.likeCheck(para);
-//			domain = BoardDAO.detailBoardList(para);
-//			System.out.println("detail title: " + domain.getTitle());
-//			if(!"".equals(searchText)) {
-//				String title = domain.getTitle();
-//				title = title.replace(searchText, "<span class=\"highlight\">" + searchText +"</span>");
-//				domain.setTitle(title);
-//			}
-//			
-//			
-//			request.setAttribute("data", domain);
-			request.setAttribute("list", BoardDAO.selBoardLikeList(i_board));
-			request.setAttribute("data", BoardDAO.detailBoardList(para));
-			ViewResolver.forwardLoginCheck("board/detail", request, response);
-		}	
+		// Detail에 필요한 내용 전송
+		para.setI_board(i_board);
+		para.setI_user(loginUser.getI_user());
+		BoardDAO.updateCount(para);
+		 
+		request.setAttribute("allList", BoardCmtDAO.selCmt(i_board));
+		request.setAttribute("list", BoardDAO.selBoardLikeList(i_board));
+		request.setAttribute("data", BoardDAO.detailBoardList(para));
+		ViewResolver.forwardLoginCheck("board/detail", request, response);
 	}
 
 	

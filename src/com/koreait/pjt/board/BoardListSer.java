@@ -26,30 +26,35 @@ public class BoardListSer extends HttpServlet {
        
     
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+		// 홈페이지 켜졌을 때 세션 작동
 		HttpSession hs = (HttpSession)request.getSession();
+		
+		// 로그인한 유저 확인 + 로그인하지않고 들어왔을 때 로그인창으로 돌려보냄
 		UserVO LoginUser = MyUtils.getLoginUser(request);
 		if(MyUtils.isLogout(request)) {
 			response.sendRedirect("/login");
 			return;
 		}
+		
+		// 제목/내용/제목+내용 어떤것을 검색할것인지 정함
 		String searchType = request.getParameter("searchType");
 		searchType = (searchType == null ) ? "a" : searchType;
 		request.setAttribute("searchType", searchType);
 		
-		
+		// 검색내용
 		String searchText = request.getParameter("search");
 		searchText = (searchText == null ? "":searchText);
 		
 		BoardDomain para = new BoardDomain();
 		
-		
+		// 페이징
 		int page = MyUtils.getIntParameter(request, "page");
 		page = (page == 0 ? 1 : page);
-		
+		// 페이징마다 나타내는 게시판 갯수
 		int recordCnt = MyUtils.getIntParameter(request, "record_cnt");
 		System.out.println("recordCnt : " + recordCnt);
 		recordCnt = (recordCnt == 0 ? 3 : recordCnt);
+		
 		
 		para.setSearchType(searchType);
 		para.setI_user(LoginUser.getI_user());
@@ -57,20 +62,18 @@ public class BoardListSer extends HttpServlet {
 		para.setSearchText("%"+searchText+"%");
 		int pageCnt = BoardDAO.selPagingCnt(para);
 		System.out.println("pageCnt : " + pageCnt);
+		
+		// 글삭제 등등 여러이유로 현재 페이지가 최대 페이지를 넘었을때 
+		// 현재 페이지를 최대 페이지로 보내버림
 		if(page>pageCnt) {
 			page = pageCnt;
 		}
 		
-//		Integer beforeRecordCnt = (Integer)hs.getAttribute("recordCnt");
-//		
-//		if(beforeRecordCnt !=null && beforeRecordCnt < recordCnt) {
-//			page = pageCnt;
-//		}
 		request.setAttribute("page", page);
 		
 		System.out.println("page : " + page);
 		
-//		request.setAttribute("checkpage", page);
+		// 페이징 기준 변수 설정 
 		int eIdx = page * recordCnt;
 		int sIdx = eIdx - recordCnt;
 		
@@ -86,6 +89,7 @@ public class BoardListSer extends HttpServlet {
 		
 		request.setAttribute("pageCnt", BoardDAO.selPagingCnt(para));
 		List<BoardDomain> list = BoardDAO.selBoardList(para);
+		
 		//하이라이트 처리
 		if(!"".equals(searchText)&& ("a".equals(searchType) || "c".equals(searchType))) {
 			for(BoardDomain item : list) {
